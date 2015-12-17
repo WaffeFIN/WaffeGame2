@@ -27,6 +27,7 @@ K, K, Q, Q, J, Joker, 9, Joker
 Jokeria ei aina pysty lyödä:
 
 7, 7, 7, 10, 10, 10 <-- tähän ei saa lyödä yhtä jokeria, sillä silloin syntyisi yksi kolmen, ja yksi neljän kortin ryhmä
+
 4, 4, 4, 4 <-- tähän ei myöskään saa lyödä jokeria, sillä suurin sallittu ryhmä on neljä.
 
 Käyttäjän toiminnot:
