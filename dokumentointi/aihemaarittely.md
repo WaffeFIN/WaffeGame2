@@ -2,50 +2,38 @@
 
 Waffe Game 2 aihemaarittely - 17.12.2015
 
-Aihe: Waffe Game 2 on korttipeli, jossa on tarkoituksena pelata pois omat korttinsa ennen vastustajaa.
-Kuten monetkin muutkin korttipelit, peliä pelataan vuorotellen. Pelissä on lyötävä samanlaisia
-kortteja pelikenttään. Vuorollaan saa myös löydä useampi kortti. Jos ei pysty lyödä (tai jos ei halua) korttia pelikentälle, niin on laitettava kaikki kortit näkyville pöydälle ja otettava pakasta kortteja, kunnes on yhteensä kymmenen ("pöytäkäsi" lasketaan siis mukaan). Pelaaja pystyy käyttämään vastustajan
-pöytäkättä omilla vuoroillaan (sääntöä voi muuttaa). Pelikentällä on tyyppi joka voi
- vaihdella lyötäessään erilaisia kortteja. Tyyppi vaihtuu kuitenkin aina seuraavanlaisesti:
+Aihe: Waffe Game 2 on korttipeli, jossa on tarkoituksena pelata pois omat korttinsa ennen vastustajaa. Kuten monetkin muutkin korttipelit, peliÃ¤ pelataan vuorotellen. PelissÃ¤ on lyÃ¶tÃ¤vÃ¤ samanlaisia kortteja pelikenttÃ¤Ã¤n. Vuorollaan saa myÃ¶s lÃ¶ydÃ¤ useampi kortti. Jos ei pysty lyÃ¶dÃ¤ (tai jos ei halua) korttia pelikentÃ¤lle, niin on laitettava kaikki kortit nÃ¤kyville pÃ¶ydÃ¤lle ja otettava pakasta kortteja, kunnes on yhteensÃ¤ kymmenen ("pÃ¶ytÃ¤kÃ¤si" lasketaan siis mukaan). Pelaaja pystyy kÃ¤yttÃ¤mÃ¤Ã¤n vastustajan pÃ¶ytÃ¤kÃ¤ttÃ¤ omilla vuoroillaan (sÃ¤Ã¤ntÃ¶Ã¤ voi muuttaa). PelikentÃ¤llÃ¤ on tyyppi joka voi vaihdella lyÃ¶tÃ¤essÃ¤Ã¤n erilaisia kortteja. Tyyppi vaihtuu kuitenkin aina seuraavanlaisesti:
 
 Maa voi muuttua suoraksi
 Suora voi muuttua pareiksi (HUOM. Suora on "syklinen", eli 3|2|A|K|Q on validi suora)
 Parit voi muuttua kolmosiksi
-Kolmoset voi muuttua neljän ryhmiksi
+Kolmoset voi muuttua neljÃ¤n ryhmiksi
 
-Kaikkien pelikentässä olevien korttejen on seurattava sen tyyppiä. Lisäksi suorassa kaikki kortit
-kuuluu samaan, yhtenäiseen suoraan.
+Kaikkien pelikentÃ¤ssÃ¤ olevien korttejen on seurattava sen tyyppiÃ¤. LisÃ¤ksi suorassa kaikki kortit kuuluu samaan, yhtenÃ¤iseen suoraan.
 
-Pelissä on perinteisesti mukana kolme jokeri korttia, joiden "arvoa" voi aina pelikentässä "muuttaa".
-Toisin sanoin jokeri on aina "tyhjä kortti", joka voi tilanteen mukaan siirtää esim. suorassa toisen
-arvon paikalle.
+PelissÃ¤ on perinteisesti mukana kolme jokeri korttia, joiden "arvoa" voi aina pelikentÃ¤ssÃ¤ "muuttaa". Toisin sanoin jokeri on aina "tyhjÃ¤ kortti", joka voi tilanteen mukaan siirtÃ¤Ã¤ esim. suorassa toisen arvon paikalle.
 
-Esimerkki jokerin käytöstä:
+Esimerkki jokerin kÃ¤ytÃ¶stÃ¤:
 
-K|Joker|J		jos tähän lyödään Q, niin saa myös lyödä 9
+K|Joker|J		jos tÃ¤hÃ¤n lyÃ¶dÃ¤Ã¤n Q, niin saa myÃ¶s lyÃ¶dÃ¤ 9
+K|Q|J|Joker|9		sillÃ¤ jokeri siirty 10 paikalle
 
-K|Q|J|Joker|9	sillä jokeri siirty 10 paikalle
-
-				Tämän saa vielä muutettua pareiksi, jos lisää esim. K|Q|Joker
-
+TÃ¤mÃ¤n saa vielÃ¤ muutettua pareiksi, jos lisÃ¤Ã¤ esim. K|Q|Joker
 K|K|Q|Q|J|Joker|9|Joker
 
 
-Jokeria ei aina pysty lyödä:
+Jokeria ei aina pysty lyÃ¶dÃ¤:
 
-7|7|7|10|10|10		tähän ei saa lyödä yhtä jokeria, sillä silloin syntyisi yksi kolmen,
-					ja yksi neljän kortin ryhmä
-					
-4|4|4|4				tähän ei myöskään saa lyödä jokeria, sillä suurin sallittu ryhmä
-					on neljä.
+7|7|7|10|10|10		tÃ¤hÃ¤n ei saa lyÃ¶dÃ¤ yhtÃ¤ jokeria, sillÃ¤ silloin syntyisi yksi kolmen, ja yksi neljÃ¤n kortin ryhmÃ¤
+4|4|4|4			tÃ¤hÃ¤n ei myÃ¶skÃ¤Ã¤n saa lyÃ¶dÃ¤ jokeria, sillÃ¤ suurin sallittu ryhmÃ¤ on neljÃ¤.
 
-Käyttäjän toiminnot:
-	Sääntöjen valitseminen
-	Uuden kaksinpelin aloittamisen
-	[BONUS] Uuden yksinpelin aloittamisen tietokonetta vastaan
-	Omien korttien valitseminen kädestä ja pöydästä
-	Korttien laittaminen pelikentälle
-		Onnistuu vain jos on valittu ainakin yksi kortti, ja jos kaikki seuraa samaa "tyyppiä" sekä jos
-		suorassa/ryhmässä ei ole liikaa kortteja
-	Oman vuoron ohitus
+KÃ¤yttÃ¤jÃ¤n toiminnot:
+* SÃ¤Ã¤ntÃ¶jen valitseminen
+* Uuden kaksinpelin aloittamisen
+* [BONUS] Uuden yksinpelin aloittamisen tietokonetta vastaan
+* Omien korttien valitseminen kÃ¤destÃ¤ ja pÃ¶ydÃ¤stÃ¤
+* Korttien laittaminen pelikentÃ¤lle
+  * Onnistuu vain jos on valittu ainakin yksi kortti, ja jos kaikki seuraa samaa "tyyppiÃ¤" sekÃ¤ jos
+  * suorassa/ryhmÃ¤ssÃ¤ ei ole liikaa kortteja
+* Oman vuoron ohitus
 	
