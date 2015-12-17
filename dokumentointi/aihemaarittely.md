@@ -2,7 +2,7 @@
 
 # Waffe Game 2 aihemäärittely - 17.12.2015
 
-Aihe: Waffe Game 2 on korttipeli, jossa on tarkoituksena pelata pois omat korttinsa ennen vastustajaa. Kuten monetkin muutkin korttipelit, peliä pelataan vuorotellen. Pelissä on lyötävä samanlaisia kortteja pelikenttään. Vuorollaan saa myös löydä useampi kortti. Jos ei pysty lyödä (tai jos ei halua) korttia pelikentälle, niin on laitettava kaikki kortit näkyville pöydälle ja otettava pakasta kortteja, kunnes on yhteensä kymmenen ("pöytäkäsi" lasketaan siis mukaan). Pelaaja pystyy käyttämään vastustajan pöytäkättä omilla vuoroillaan (sääntöä voi muuttaa). Pelikentällä on tyyppi joka voi vaihdella lyötäessään erilaisia kortteja. Tyyppi vaihtuu kuitenkin aina seuraavanlaisesti:
+Waffe Game 2 on korttipeli, jossa on tarkoituksena pelata pois omat korttinsa ennen vastustajaa. Kuten monetkin muutkin korttipelit, peliä pelataan vuorotellen. Pelissä on lyötävä samanlaisia kortteja pelikenttään. Vuorollaan saa myös löydä useampi kortti. Jos ei pysty lyödä (tai jos ei halua) korttia pelikentälle, niin on laitettava kaikki kortit näkyville pöydälle ja otettava pakasta kortteja, kunnes on yhteensä kymmenen ("pöytäkäsi" lasketaan siis mukaan). Pelaaja pystyy käyttämään vastustajan pöytäkättä omilla vuoroillaan (sääntöä voi muuttaa). Pelikentällä on tyyppi joka voi vaihdella lyötäessään erilaisia kortteja. Tyyppi vaihtuu kuitenkin aina seuraavanlaisesti:
 
 Maa voi muuttua suoraksi
 Suora voi muuttua pareiksi (HUOM. Suora on "syklinen", eli 3|2|A|K|Q on validi suora)
