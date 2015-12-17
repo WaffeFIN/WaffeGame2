@@ -15,17 +15,17 @@ Pelissä on perinteisesti mukana kolme jokeri korttia, joiden "arvoa" voi aina p
 
 Esimerkki jokerin käytöstä:
 
-K|Joker|J		jos tähän lyödään Q, niin saa myös lyödä 9
-K|Q|J|Joker|9		sillä jokeri siirty 10 paikalle
+K, Joker, J <-- jos tähän lyödään Q, niin saa myös lyödä 9, sillä jokeri siirty 10 paikalle
+K, Q, J, Joker, 9 
 
-Tämän saa vielä muutettua pareiksi, jos lisää esim. K|Q|Joker
-K|K|Q|Q|J|Joker|9|Joker
+Tämän saa vielä muutettua pareiksi, jos lisää esim. K, Q, Joker
+K, K, Q, Q, J, Joker, 9, Joker
 
 
 Jokeria ei aina pysty lyödä:
 
-7|7|7|10|10|10		tähän ei saa lyödä yhtä jokeria, sillä silloin syntyisi yksi kolmen, ja yksi neljän kortin ryhmä
-4|4|4|4			tähän ei myöskään saa lyödä jokeria, sillä suurin sallittu ryhmä on neljä.
+7, 7, 7, 10, 10, 10 <-- tähän ei saa lyödä yhtä jokeria, sillä silloin syntyisi yksi kolmen, ja yksi neljän kortin ryhmä
+4, 4, 4, 4 <-- tähän ei myöskään saa lyödä jokeria, sillä suurin sallittu ryhmä on neljä.
 
 Käyttäjän toiminnot:
 * Sääntöjen valitseminen
