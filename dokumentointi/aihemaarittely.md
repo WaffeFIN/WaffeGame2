@@ -16,9 +16,11 @@ Pelissä on perinteisesti mukana kolme jokeri korttia, joiden "arvoa" voi aina p
 Esimerkki jokerin käytöstä:
 
 K, Joker, J <-- jos tähän lyödään Q, niin saa myös lyödä 9, sillä jokeri siirty 10 paikalle
+
 K, Q, J, Joker, 9 
 
 Tämän saa vielä muutettua pareiksi, jos lisää esim. K, Q, Joker
+
 K, K, Q, Q, J, Joker, 9, Joker
 
 
