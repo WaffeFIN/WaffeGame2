@@ -11,3 +11,27 @@
 	19
 		Tein aihemaarittelyn
 	20
+	
+18.12.2015
+
+	19:30
+		Tein perus luokat: Main, Card, Hand, Pack
+	20
+		lisäsin enumit Value ja Suit. Tein abstraktit luokat CardOwner ja Player. Lisäsin luokan HumanPlayer
+	21
+
+	
+	23
+		Loin Pile luokan, joka on "pelikentän" korttipino. Lisäki muutin CardOwnerin metodeja, muun muuassa addCard:ia.
+
+19.12.2015
+
+	00
+		Tein Pile luokalla testit, joiden läpäistessä addCard metodi palauttaa true.
+	01
+		Loin pari JUnit testiä Card:eille, Packi:lle ja Hand:ille sekä myös testitiedoston Pile:ille
+	02
+		Pile:in addCard-testejä korjailen... aina kauheen näköistä koodia syntyy. Pitänee kai siirtää (addCard-)testit toiselle luokalle, niin koodi pysyy siistimpänä.
+	03
+		Pari ongelmaa sain korjattua, mutta on korjattava testiä, joka tarkistaa onko pino suora vai ei. Ongelmana on se, että suora saa olla syklinen (esim. 2 - A - K) ja nämä tilanteet sekä jokereiden lisäys aiheuttaa ongelmia.
+	03:30
