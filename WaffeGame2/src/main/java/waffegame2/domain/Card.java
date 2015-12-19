@@ -31,9 +31,13 @@ public class Card {
         return suit;
     }
 
+    public boolean isJoker() {
+        return (getSuit() == Suit.JOKER);
+    }
+
     @Override
     public String toString() {
-        if (suit == Suit.JOKER) {
+        if (isJoker()) {
             return suit.toString();
         } else {
             return value + " of " + suit;

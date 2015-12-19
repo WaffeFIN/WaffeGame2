@@ -25,7 +25,11 @@ public class Main {
         cards = new ArrayList();
         cards.add(new Card(Value.TWO, Suit.DIAMONDS));
         cards.add(new Card(Value.ACE, Suit.DIAMONDS));
-        cards.add(new Card(Value.KING, Suit.CLUBS));
+        
+        cards.add(new Card(Value.JOKER, Suit.JOKER));
+        cards.add(new Card(Value.QUEEN, Suit.CLUBS));
+        cards.add(new Card(Value.TEN, Suit.SPADES));
+        Collections.sort(cards, new CardComparator());
         for (Card card : cards) {
             System.out.println(card);
         }

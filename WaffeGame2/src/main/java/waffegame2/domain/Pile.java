@@ -53,53 +53,46 @@ public class Pile extends CardOwner {
     }
 
     private boolean isValid() {
-        PileType minType = PileType.NONE;
         switch (type) {
             case NONE:
             case SUIT:
                 if (testSuit()) {
-                    minType = PileType.SUIT;
-                    break;
+                    type = PileType.SUIT;
+                    return true;
                 }
             case STRAIGHT:
                 if (testStraight()) {
-                    minType = PileType.STRAIGHT;
-                    break;
+                    type = PileType.STRAIGHT;
+                    return true;
                 }
             case PAIRS:
-                if (testGroup(2)) {
-                    minType = PileType.PAIRS;
-                    break;
-                }
             case TRIPLES:
-                if (testGroup(3)) {
-                    minType = PileType.TRIPLES;
-                    break;
-                }
             case QUADRUPLES:
-                if (testGroup(4)) {
-                    minType = PileType.QUADRUPLES;
-                    break;
+                if (testGroup(2)) {
+                    type = PileType.PAIRS;
+                    return true;
                 }
-        }
-        if (minType != PileType.NONE) {
-            type = minType;
-            return true;
+                if (testGroup(3)) {
+                    type = PileType.TRIPLES;
+                    return true;
+                }
+                if (testGroup(4)) {
+                    type = PileType.QUADRUPLES;
+                    return true;
+                }
         }
         return false;
     }
 
     private boolean testSuit() {
-        if (cardAmount() == 0) {
-            return false;
+        List<Card> list = getNonJokerCardsSorted();
+        if (list.isEmpty()) {
+            return true;
         }
-        Suit suit = Suit.JOKER;
-        for (Card card : cards) {
-            if (suit == Suit.JOKER) {
-                if (card.getSuit() != Suit.JOKER) {
-                    suit = card.getSuit();
-                }
-            } else if (!card.getSuit().equals(Suit.JOKER) && !card.getSuit().equals(suit)) {
+
+        Suit suit = list.get(0).getSuit();
+        for (Card card : list) {
+            if (card.getSuit() != suit) {
                 return false;
             }
         }
@@ -107,58 +100,88 @@ public class Pile extends CardOwner {
     }
 
     private boolean testStraight() {
-        if (cardAmount() == 0 || cardAmount() >= 14) {
+        if (cardAmount() >= Value.values().length) {
             return false;
         }
-        List<Card> list = new ArrayList(cards);
-        Collections.sort(list, new CardComparator());
 
-        for (int startIndex = 0; startIndex < cardAmount(); startIndex++) {
-            Value previousValue = Value.JOKER;
-            int jokers = countJokers();
-            for (int currentIndex = 0; currentIndex < cardAmount(); currentIndex++) {
-                int cardIndex = (currentIndex + startIndex) % cardAmount();
-                Card card = list.get(cardIndex);
-                if (card.getSuit() != Suit.JOKER) {
-                    if (card.getValue().toInt() == (previousValue.toInt()) % (Value.values().length - 1) + 1 || previousValue == Value.JOKER) {
-                        previousValue = card.getValue();
+        List<Card> list = getNonJokerCardsSorted();
+        if (list.isEmpty()) {
+            return true;
+        }
+        return testStraightMethod(list, 0, false);
+    }
+
+    private boolean testStraightMethod(List<Card> list, int index, boolean second) {
+        int jokers = countJokers();
+        Value previousValue = list.get(index).getValue();
+        int i = index;
+        while (true) {
+            i++;
+            if (i >= list.size()) {
+                i = 0;
+            }
+            if (i == index) {
+                return true;
+            }
+
+            Card card = list.get(i);
+            Value value = card.getValue();
+            if (previousValue.toInt() != value.toInt() - 1) {
+                int jokersNeeded = valueDifference(previousValue, value) - 1;
+                if (jokersNeeded < 0) {
+                    return false;
+                }
+                if (jokers >= jokersNeeded) {
+                    jokers -= jokersNeeded;
+                } else {
+                    if (second) {
+                        return false;
                     } else {
-                        int difference = (card.getValue().toInt() - previousValue.toInt() + Value.values().length - 1) % (Value.values().length - 1) - 1;
-                        if (jokers > difference) {
-                            jokers -= difference;
-                        } else {
-                            break;
-                        }
+                        return testStraightMethod(list, i, true);
                     }
                 }
-                if (currentIndex == cardAmount() - 1) {
-                    return true;
-                }
             }
+            previousValue = value;
         }
-        return false;
+    }
+
+    private int valueDifference(Value value1, Value value2) {
+        int max = Value.max();
+        int difference = (value1.toInt() - value2.toInt() + max) % max;
+        if (difference > (double) max / 2) {
+            difference = max - difference;
+        }
+        return difference;
     }
 
     private boolean testGroup(int groupSize) {
-        if (cardAmount() == 0 || cardAmount() % groupSize != 0) {
+        if (cardAmount() % groupSize != 0) {
             return false;
         }
-        List<Card> list = new ArrayList(cards);
-        Collections.sort(list, new CardComparator());
+
+        List<Card> list = getNonJokerCardsSorted();
+        if (list.isEmpty()) {
+            return true;
+        }
+        int jokers = countJokers();
 
         int missing = 0;
-
+        Value previousValue = Value.JOKER;
         for (Card card : list) {
-            if (card.getSuit() != Suit.JOKER) {
+            if (card.getValue() != previousValue) {
                 int group = countValue(card.getValue());
                 if (group > groupSize) {
                     return false;
                 }
                 missing += groupSize - group;
+                previousValue = card.getValue();
             }
         }
-
-        return (missing == countJokers());
+        if (missing > jokers){
+            return false;
+        }
+        jokers -= missing;
+        return (jokers % groupSize == 0);
     }
 
     private int countJokers() {
@@ -174,4 +197,16 @@ public class Pile extends CardOwner {
         }
         return n;
     }
+
+    private List<Card> getNonJokerCardsSorted() {
+        List<Card> list = new ArrayList();
+        for (Card card : cards) {
+            if (!card.isJoker()) {
+                list.add(card);
+            }
+        }
+        Collections.sort(list, new CardComparator());
+        return list;
+    }
+
 }

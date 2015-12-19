@@ -24,6 +24,16 @@ public enum Value {
         return value;
     }
 
+    public static int max() {
+        int max = 0;
+        for (Value value : Value.values()) {
+            if (value.toInt() > max) {
+                max = value.toInt();
+            }
+        }
+        return max;
+    }
+
     @Override
     public String toString() {
         switch (value) {
