@@ -1,9 +1,10 @@
+package waffegame2.domain;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.*;
@@ -15,26 +16,26 @@ import waffegame2.domain.*;
  *
  * @author Walter
  */
-public class PileTests {
+public class PileAndPileRuleTests {
 
     private Pack pack;
     private Pile pile;
     private Hand hand;
     private List<Card> cards;
 
-    public PileTests() {
+    public PileAndPileRuleTests() {
     }
 
     private void checkAdd(PileType type) {
-        boolean r = pile.addCard(cards);
+        boolean r = pile.addCards(cards);
         assertEquals(type, pile.getType());
         assertTrue(r);
     }
 
     @Before
     public void setUp() {
-        pack = new Pack(3, 1);
-        pile = new Pile();
+        pack = new Pack(1, 3);
+        pile = new Pile(new PileRuleStandard());
         hand = new Hand(10);
         cards = new ArrayList();
         cards.add(new Card(Value.TWO, Suit.DIAMONDS));
@@ -44,6 +45,13 @@ public class PileTests {
     @Test
     public void addCardToPile() {
         assertTrue(pile.addCard(new Card(Value.FIVE, Suit.DIAMONDS)));
+        List<Card> cards = new ArrayList();
+    }
+
+    @Test
+    public void addCardsToPile() {
+        cards.add(new Card(Value.FIVE, Suit.DIAMONDS));
+        assertTrue(pile.addCards(cards));
     }
 
     @Test
@@ -54,10 +62,33 @@ public class PileTests {
     }
 
     @Test
+    public void addNoCardsToPileWorks() {
+        cards.clear();
+        assertEquals(false, pile.addCards(cards));
+    }
+
+    @Test
+    public void clearPileWorks() {
+        pile.addCard(new Card(Value.FIVE, Suit.DIAMONDS));
+        pile.clear();
+        assertEquals(PileType.NULL, pile.getType());
+        assertEquals(0, pile.cardAmount());
+    }
+
+    @Test
+    public void emptyPileAddOnlyJokers() {
+        cards.clear();
+        cards.add(new Card(Value.JOKER, Suit.JOKER));
+        cards.add(new Card(Value.JOKER, Suit.JOKER));
+        assertTrue(pile.addCards(cards));
+        assertEquals(pile.getType(), PileType.SUIT);
+    }
+
+    @Test
     public void emptyPileIsInvalid() {
         cards.add(new Card(Value.TEN, Suit.CLUBS));
-        assertTrue(!pile.addCard(cards));
-        assertEquals(pile.getType(), PileType.NONE);
+        assertTrue(!pile.addCards(cards));
+        assertEquals(pile.getType(), PileType.NULL);
     }
 
     @Test
@@ -65,8 +96,8 @@ public class PileTests {
         cards.add(new Card(Value.NINE, Suit.CLUBS));
         cards.add(new Card(Value.JOKER, Suit.JOKER));
         cards.add(new Card(Value.JOKER, Suit.JOKER));
-        assertTrue(!pile.addCard(cards));
-        assertEquals(pile.getType(), PileType.NONE);
+        assertTrue(!pile.addCards(cards));
+        assertEquals(pile.getType(), PileType.NULL);
     }
 
     @Test
@@ -126,6 +157,42 @@ public class PileTests {
         cards.add(new Card(Value.JOKER, Suit.JOKER));
         cards.add(new Card(Value.JOKER, Suit.JOKER));
         checkAdd(PileType.STRAIGHT);
+    }
+
+    @Test
+    public void emptyPileStraightIsValidWithJokersEverywhereWrapAround() {
+        cards.add(new Card(Value.JOKER, Suit.JOKER));
+        cards.add(new Card(Value.FOUR, Suit.HEARTS));
+        cards.add(new Card(Value.JOKER, Suit.JOKER));
+        cards.add(new Card(Value.SIX, Suit.HEARTS));
+        cards.add(new Card(Value.NINE, Suit.CLUBS));
+        cards.add(new Card(Value.JOKER, Suit.JOKER));
+        cards.add(new Card(Value.JACK, Suit.CLUBS));
+        cards.add(new Card(Value.QUEEN, Suit.CLUBS));
+        cards.add(new Card(Value.JOKER, Suit.JOKER));
+        checkAdd(PileType.STRAIGHT);
+    }
+
+    @Test
+    public void emptyPileStraightWithTooManyCards() {
+        cards.add(new Card(Value.THREE, Suit.CLUBS));
+        cards.add(new Card(Value.FOUR, Suit.HEARTS));
+        cards.add(new Card(Value.FIVE, Suit.CLUBS));
+        cards.add(new Card(Value.SIX, Suit.HEARTS));
+        cards.add(new Card(Value.SEVEN, Suit.HEARTS));
+        cards.add(new Card(Value.EIGHT, Suit.HEARTS));
+        cards.add(new Card(Value.NINE, Suit.CLUBS));
+        cards.add(new Card(Value.TEN, Suit.CLUBS));
+        cards.add(new Card(Value.JACK, Suit.CLUBS));
+        cards.add(new Card(Value.QUEEN, Suit.CLUBS));
+        cards.add(new Card(Value.KING, Suit.CLUBS));
+        Card card = new Card(Value.KING, Suit.DIAMONDS);
+        cards.add(card);
+        assertTrue(!pile.addCards(cards));
+        assertEquals(pile.getType(), PileType.NULL);
+        cards.remove(card);
+        assertTrue(pile.addCards(cards));
+        assertEquals(pile.getType(), PileType.STRAIGHT);
     }
 
     @Test
@@ -247,4 +314,3 @@ public class PileTests {
         checkAdd(PileType.STRAIGHT);
     }
 }
-

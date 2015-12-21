@@ -9,10 +9,18 @@ package waffegame2.domain;
  *
  * @author Walter
  */
-public class HumanPlayer extends Player {
+public class HumanPlayer extends AbstractPlayer {
 
     public HumanPlayer(String name) {
         super(name);
     }
 
+    @Override
+    public void playTurn() {
+        /*
+            Select/unselect card
+            Hit cards / pass turn (if none selected... should it be its own button?)
+        */
+        //
+    }
 }

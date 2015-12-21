@@ -11,35 +11,25 @@ package waffegame2.domain;
  */
 public enum PileType {
 
-    NONE(0), SUIT(1), STRAIGHT(2), PAIRS(3), TRIPLES(4), QUADRUPLES(5);
-
-    private final int type;
-
-    private PileType(int type) {
-        this.type = type;
-    }
-
-    public int toInt() {
-        return type;
-    }
+    NULL, SUIT, STRAIGHT, PAIRS, TRIPLES, QUADRUPLES;
 
     @Override
     public String toString() {
-        switch (type) {
-            case 0:
+        switch (this) {
+            case NULL:
                 return "None";
-            case 1:
+            case SUIT:
                 return "Suit";
-            case 2:
+            case STRAIGHT:
                 return "Straight";
-            case 3:
+            case PAIRS:
                 return "Pairs";
-            case 4:
+            case TRIPLES:
                 return "Triples";
-            case 5:
+            case QUADRUPLES:
                 return "Quadruples";
             default:
-                return "" + toInt();
+                return "Other";
         }
     }
 }

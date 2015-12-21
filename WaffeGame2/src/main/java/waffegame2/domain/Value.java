@@ -25,7 +25,7 @@ public enum Value {
     }
 
     public static int max() {
-        int max = 0;
+        int max = Integer.MIN_VALUE;
         for (Value value : Value.values()) {
             if (value.toInt() > max) {
                 max = value.toInt();

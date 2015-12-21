@@ -11,33 +11,23 @@ package waffegame2.domain;
  */
 public enum Suit {
 
-    JOKER(0), HEARTS(1), DIAMONDS(2), CLUBS(3), SPADES(4);
-
-    private final int suit;
-
-    private Suit(int suit) {
-        this.suit = suit;
-    }
-
-    public int toInt() {
-        return suit;
-    }
+    JOKER, HEARTS, DIAMONDS, CLUBS, SPADES;
 
     @Override
     public String toString() {
-        switch (suit) {
-            case 0:
+        switch (this) {
+            case JOKER:
                 return "Joker";
-            case 1:
+            case HEARTS:
                 return "Hearts";
-            case 2:
+            case DIAMONDS:
                 return "Diamonds";
-            case 3:
+            case CLUBS:
                 return "Clubs";
-            case 4:
+            case SPADES:
                 return "Spades";
             default:
-                return "" + toInt();
+                return "Other";
         }
     }
 }

@@ -5,33 +5,50 @@
  */
 package waffegame2.domain;
 
+import java.util.Collection;
 import java.util.Collections;
 
 /**
  *
  * @author Walter
  */
-public class Hand extends CardOwner {
+public class Hand extends AbstractCardOwner {
 
     private int maxCardAmount;
-    private boolean cardsAreVisible;
+    private boolean visible;
 
     public Hand(int maxCardAmount) {
         this(maxCardAmount, false);
     }
 
-    public Hand(int maxCardAmount, boolean cardsAreVisible) {
+    public Hand(int maxCardAmount, boolean visible) {
         super();
         this.maxCardAmount = maxCardAmount;
-        this.cardsAreVisible = cardsAreVisible;
+        this.visible = visible;
     }
 
     @Override
-    public boolean addCard(Card c) {
-        if (cardAmount() >= maxCardAmount) {
-            return false;
+    public boolean addCard(Card card) {
+        if (maxCardAmount <= 0 || cardAmount() < maxCardAmount) {
+            return super.addCard(card);
         }
-        return super.addCard(c);
+        return false;
+    }
+
+    @Override
+    public boolean addCards(Collection<Card> collection) {
+        if (maxCardAmount <= 0 || cardAmount() + collection.size() - 1 < maxCardAmount) {
+            return super.addCards(collection);
+        }
+        return false;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisibility(boolean visible) {
+        this.visible = visible;
     }
 
     public void order() {

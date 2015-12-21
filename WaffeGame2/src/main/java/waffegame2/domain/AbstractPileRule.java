@@ -5,17 +5,19 @@
  */
 package waffegame2.domain;
 
+import java.util.List;
+
 /**
  *
  * @author Walter
  */
-public abstract class Player {
+public abstract class AbstractPileRule {
 
-    private String name;
-    private Hand hand;
+    protected List<Card> cards;
 
-    public Player(String name) {
-        this.name = name;
-        this.hand = new Hand(10);
+    public AbstractPileRule() {
+        this.cards = null;
     }
+
+    abstract public PileType checkType(List<Card> list);
 }

@@ -11,18 +11,18 @@ import java.util.Collections;
  *
  * @author Walter
  */
-public class Pack extends CardOwner {
+public class Pack extends AbstractCardOwner {
 
     public Pack() {
         super();
     }
 
-    public Pack(int jokers, int packs) {
+    public Pack(int packs, int jokers) {
         super();
-        createCards(jokers, packs);
+        createCards(packs, jokers);
     }
 
-    private void createCards(int jokers, int packs) {
+    private void createCards(int packs, int jokers) {
         for (int i = 0; i < packs; i++) {
             for (int j = 0; j < jokers; j++) {
                 addCard(new Card(Value.JOKER, Suit.JOKER));

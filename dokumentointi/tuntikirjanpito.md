@@ -43,3 +43,12 @@
 	16
 		Sain väännettyä suoratesti-metodin kuntoon. Loin vielä viimeiset testit pinolle.
 	17
+	
+21.12
+
+	21
+		Tuntikirjanpito unohtui, mutta muistaakseni tein metodeista siistimpiä yms.
+	22
+		Viimeistelin testit, pit-testi generoitu. Luokkakaavion viimeistely
+	23
+		-"-. Git commit ja push
