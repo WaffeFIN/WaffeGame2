@@ -3,21 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package waffegame2.domain;
+package waffegame2.cardOwner.pileRules;
 
+import waffegame2.cardOwner.PileType;
+import waffegame2.card.Card;
 import java.util.List;
 
 /**
  *
  * @author Walter
  */
-public abstract class AbstractPileRule {
-
-    protected List<Card> cards;
-
-    public AbstractPileRule() {
-        this.cards = null;
-    }
-
-    abstract public PileType checkType(List<Card> list);
+public interface PileRule {
+    public PileType checkType(List<Card> list);
 }

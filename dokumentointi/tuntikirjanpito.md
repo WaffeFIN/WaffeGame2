@@ -1,15 +1,15 @@
 
-	NOTE:
-	Pidä kirjaa harjoitustyöhön käyttämästäsi työmäärästä
-	Käyttämäsi työmäärä ei vaikuta arvosanaan, joten ole rehellinen
-	Merkitse aina vähintään päivämäärä, käyttämäsi aika ja ajankäytön kohde
+	NOTE TO SELF:
+	* Pidä kirjaa harjoitustyöhön käyttämästäsi työmäärästä
+	* Käyttämäsi työmäärä ei vaikuta arvosanaan, joten ole rehellinen
+	* Merkitse aina vähintään päivämäärä, käyttämäsi aika ja ajankäytön kohde
 
 17.12.2015
 
 	18
 		Tein Git ja GitHub jutut
 	19
-		Tein aihemaarittelyn
+		Tein aihemäärittelyn
 	20
 	
 18.12.2015
@@ -31,7 +31,7 @@
 	01
 		Loin pari JUnit testiä Card:eille, Packi:lle ja Hand:ille sekä myös testitiedoston Pile:ille
 	02
-		Pile:in addCard-testejä korjailen... aina kauheen näköistä koodia syntyy. Pitänee kai siirtää (addCard-)testit toiselle luokalle, niin koodi pysyy siistimpänä.
+		Pile:in addCard-testejä korjailen... aika kauheen näköistä koodia syntyy. Pitänee kai siirtää (addCard-)testit toiselle luokalle, niin koodi pysyy siistimpänä.
 	03
 		Pari ongelmaa sain korjattua, mutta on korjattava testiä, joka tarkistaa onko pino suora vai ei. Ongelmana on se, että suora saa olla syklinen (esim. 2 - A - K) ja nämä tilanteet sekä jokereiden lisäys aiheuttaa ongelmia.
 	03:30
@@ -47,8 +47,39 @@
 21.12
 
 	21
-		Tuntikirjanpito unohtui, mutta muistaakseni tein metodeista siistimpiä yms.
+		Tuntikirjanpito unohtui, mutta muistaakseni tein metodeista (mm. AbstractCardOwnerissa) siistimpiä yms.
 	22
 		Viimeistelin testit, pit-testi generoitu. Luokkakaavion viimeistely
 	23
 		-"-. Git commit ja push
+	23:30
+		
+22.12
+
+	15
+		Siistin pakkauksia, ja mietin käyttöliittymää.
+	16
+	
+26.12
+	
+	19
+		Otin "Abstract" - sanan pois abstrakteista luokista. Teen "ruman" version peli logiikasta, jonka jälkeen refactoroin sen.
+	20
+		Tein GameRule rajapinnan ja GameRuleWaffeGame2 luokan. Laadin pelilogiikkaa.
+	21	
+		Jatkan pelilogiikan tekemistä. Tuumin miten käyttöliittymä tulee logiikan kanssa toimeen... Muutin pelaajia niin, että on vain yksi Player-luokka, jolla on CardSelector-rajapinnan toteuttava objekti, minkä avulla valitaan kortteja vuorolla. Tietokonepelaajalla on tähän tekoäly, ja ihmispelaajalla on käyttöliittymä
+	22
+		Jatkan pelilogiikan tekemistä. Eka testi rundi, ohjelma käynnistyi, mutta löytyi logiikan kannalta puutteita.
+	23
+		Teen uuden luokan Play. Tämä johtuu siitä, ettei Player ole CardOwner, joten kun yritetään lyödä kortteja pöytään on vaikea seurata niitä jos ne on otettu monesta Handistä.
+
+27.12
+
+	00
+		Korjasin käyttöliittymää. Debuggaan yhtä ihmeellistä bugia liittyen katoavia kortteja.
+	01
+		Bugi korjattu, kesti noin ½ tuntia. Peli toimii!! Muutin kaiken ohjelmalogiikan pois käyttöliittymästä. GameRule nimetty GameLogic:iksi
+	02
+		Koodin siistintää ja testausta. On mietittävä teko-älyn implementaatiota (etukäteen)
+	03
+	

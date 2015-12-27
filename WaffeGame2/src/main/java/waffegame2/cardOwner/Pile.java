@@ -3,17 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package waffegame2.domain;
+package waffegame2.cardOwner;
 
+import waffegame2.cardOwner.pileRules.PileRule;
+import waffegame2.card.Card;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import waffegame2.card.CardComparator;
 
-public class Pile extends AbstractCardOwner {
+public class Pile extends CardOwner {
 
     private PileType type;
-    private AbstractPileRule rule;
+    private PileRule rule;
 
-    public Pile(AbstractPileRule rule) {
+    public Pile(PileRule rule) {
         this.type = PileType.NULL;
         this.rule = rule;
     }
@@ -48,5 +52,14 @@ public class Pile extends AbstractCardOwner {
 
     public PileType getType() {
         return type;
+    }
+
+    @Override
+    public String getName() {
+        return "Pile";
+    }
+
+    public void sort() {
+        Collections.sort(cards, new CardComparator());
     }
 }

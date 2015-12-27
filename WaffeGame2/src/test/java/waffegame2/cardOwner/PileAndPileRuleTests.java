@@ -1,16 +1,19 @@
-package waffegame2.domain;
+package waffegame2.cardOwner;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import waffegame2.cardOwner.pileRules.PileRuleStandard;
+import waffegame2.card.Value;
+import waffegame2.card.Suit;
+import waffegame2.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import waffegame2.domain.*;
 
 /**
  *
@@ -41,6 +44,16 @@ public class PileAndPileRuleTests {
         cards.add(new Card(Value.TWO, Suit.DIAMONDS));
         cards.add(new Card(Value.ACE, Suit.DIAMONDS));
     }
+    
+    @Test
+    public void pileTypeTest() {
+        assertEquals("Empty",PileType.NULL.toString());
+        assertEquals("Suit",PileType.SUIT.toString());
+        assertEquals("Straight",PileType.STRAIGHT.toString());
+        assertEquals("Pairs",PileType.PAIRS.toString());
+        assertEquals("Triples",PileType.TRIPLES.toString());
+        assertEquals("Quadruples",PileType.QUADRUPLES.toString());
+    }
 
     @Test
     public void addCardToPile() {
@@ -57,8 +70,8 @@ public class PileAndPileRuleTests {
     @Test
     public void addCardToPileWorks() {
         pile.addCard(new Card(Value.FIVE, Suit.DIAMONDS));
-        assertEquals(pile.cardAmount(), 1);
-        assertEquals(pile.getType(), PileType.SUIT);
+        assertEquals(1, pile.cardAmount());
+        assertEquals(PileType.SUIT, pile.getType());
     }
 
     @Test
@@ -81,14 +94,14 @@ public class PileAndPileRuleTests {
         cards.add(new Card(Value.JOKER, Suit.JOKER));
         cards.add(new Card(Value.JOKER, Suit.JOKER));
         assertTrue(pile.addCards(cards));
-        assertEquals(pile.getType(), PileType.SUIT);
+        assertEquals(PileType.SUIT, pile.getType());
     }
 
     @Test
     public void emptyPileIsInvalid() {
         cards.add(new Card(Value.TEN, Suit.CLUBS));
         assertTrue(!pile.addCards(cards));
-        assertEquals(pile.getType(), PileType.NULL);
+        assertEquals(PileType.NULL, pile.getType());
     }
 
     @Test
@@ -97,7 +110,7 @@ public class PileAndPileRuleTests {
         cards.add(new Card(Value.JOKER, Suit.JOKER));
         cards.add(new Card(Value.JOKER, Suit.JOKER));
         assertTrue(!pile.addCards(cards));
-        assertEquals(pile.getType(), PileType.NULL);
+        assertEquals(PileType.NULL, pile.getType());
     }
 
     @Test
@@ -189,10 +202,10 @@ public class PileAndPileRuleTests {
         Card card = new Card(Value.KING, Suit.DIAMONDS);
         cards.add(card);
         assertTrue(!pile.addCards(cards));
-        assertEquals(pile.getType(), PileType.NULL);
+        assertEquals(PileType.NULL, pile.getType());
         cards.remove(card);
         assertTrue(pile.addCards(cards));
-        assertEquals(pile.getType(), PileType.STRAIGHT);
+        assertEquals(PileType.STRAIGHT, pile.getType());
     }
 
     @Test

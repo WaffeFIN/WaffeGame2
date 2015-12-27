@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package waffegame2.domain;
+package waffegame2.cardOwner;
 
+import waffegame2.card.Card;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -13,11 +14,11 @@ import java.util.List;
  *
  * @author Walter
  */
-public abstract class AbstractCardOwner {
+public abstract class CardOwner {
 
     protected List<Card> cards;
 
-    public AbstractCardOwner() {
+    public CardOwner() {
         this.cards = new ArrayList();
     }
 
@@ -30,11 +31,7 @@ public abstract class AbstractCardOwner {
     }
 
     public boolean removeCard(Card card) {
-        if (cards.contains(card)) {
-            cards.remove(card);
-            return true;
-        }
-        return false;
+        return cards.remove(card);
     }
 
     public boolean removeCards(Collection<Card> collection) {
@@ -49,7 +46,15 @@ public abstract class AbstractCardOwner {
         cards.clear();
     }
 
-    public boolean transferCard(AbstractCardOwner target, Card card) {
+    public boolean transferCard(CardOwner target) {
+        return transferCard(target, getCard());
+    }
+
+    public boolean transferCards(CardOwner target) {
+        return transferCards(target, getCards());
+    }
+
+    public boolean transferCard(CardOwner target, Card card) {
         if (!removeCard(card)) {
             return false;
         }
@@ -61,7 +66,7 @@ public abstract class AbstractCardOwner {
         }
     }
 
-    public boolean transferCards(AbstractCardOwner target, Collection<Card> collection) {
+    public boolean transferCards(CardOwner target, Collection<Card> collection) {
         if (!removeCards(collection)) {
             return false;
         }
@@ -81,21 +86,35 @@ public abstract class AbstractCardOwner {
         return cards.get(index);
     }
 
+    public List<Card> getCards(int amount) {
+        List<Card> list = new ArrayList(cards.subList(0, amount));
+        return list;
+    }
+
     public List<Card> getCards() {
-        return cards;
+        List<Card> list = new ArrayList(cards);
+        return list;
     }
 
     public int cardAmount() {
         return cards.size();
     }
 
-    @Override
-    public String toString() {
+    abstract public String getName();
+
+    public String listCards() {
         String str = "";
+        if (cardAmount() == 0) {
+            return "<none>";
+        }
         for (Card card : cards) {
             str += card.toString() + "\n";
         }
         return str;
     }
 
+    @Override
+    public String toString() {
+        return getName() + ":\n" + listCards();
+    }
 }

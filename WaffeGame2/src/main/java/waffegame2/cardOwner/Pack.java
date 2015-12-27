@@ -3,15 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package waffegame2.domain;
+package waffegame2.cardOwner;
 
+import waffegame2.card.Value;
+import waffegame2.card.Suit;
+import waffegame2.card.Card;
 import java.util.Collections;
 
 /**
  *
  * @author Walter
  */
-public class Pack extends AbstractCardOwner {
+public class Pack extends CardOwner {
 
     public Pack() {
         super();
@@ -41,5 +44,10 @@ public class Pack extends AbstractCardOwner {
 
     public void shuffle() {
         Collections.shuffle(cards);
+    }
+    
+    @Override
+    public String getName() {
+        return "Pack";
     }
 }

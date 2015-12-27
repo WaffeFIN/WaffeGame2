@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package waffegame2.domain;
+package waffegame2.cardOwner;
 
 /**
  *
@@ -17,7 +17,7 @@ public enum PileType {
     public String toString() {
         switch (this) {
             case NULL:
-                return "None";
+                return "Empty";
             case SUIT:
                 return "Suit";
             case STRAIGHT:

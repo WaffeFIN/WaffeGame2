@@ -1,4 +1,4 @@
-package waffegame2.domain;
+package waffegame2.card;
 
 /**
  *

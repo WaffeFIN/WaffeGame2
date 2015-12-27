@@ -1,9 +1,6 @@
 package waffegame2;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import waffegame2.domain.*;
+import waffegame2.logic.Game;
 
 /**
  *
@@ -15,6 +12,8 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        Game game = new Game();
+        game.run();
     }
 
 }

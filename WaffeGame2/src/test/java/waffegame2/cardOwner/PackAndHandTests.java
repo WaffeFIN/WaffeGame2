@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package waffegame2.domain;
+package waffegame2.cardOwner;
 
+import waffegame2.card.Value;
+import waffegame2.card.Suit;
+import waffegame2.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
-import waffegame2.domain.Hand;
-import waffegame2.domain.Pack;
 
 /**
  *
@@ -138,7 +139,7 @@ public class PackAndHandTests {
         cards.add(new Card(Value.TWO, Suit.CLUBS));
         cards.add(new Card(Value.KING, Suit.DIAMONDS));
         hand.addCards(cards);
-        hand.order();
+        hand.sort();
         assertEquals(true, hand.toString().contains("Joker\n"
                 + "Ace of Spades\n"
                 + "2 of Clubs\n"

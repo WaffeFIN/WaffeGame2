@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package waffegame2.domain;
+package waffegame2.cardOwner;
 
+import waffegame2.card.CardComparator;
+import waffegame2.card.Card;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -12,19 +14,34 @@ import java.util.Collections;
  *
  * @author Walter
  */
-public class Hand extends AbstractCardOwner {
+public class Hand extends CardOwner {
 
+    private String name;
     private int maxCardAmount;
     private boolean visible;
 
     public Hand(int maxCardAmount) {
-        this(maxCardAmount, false);
+        this("", maxCardAmount, false);
     }
 
     public Hand(int maxCardAmount, boolean visible) {
+        this("", maxCardAmount, visible);
+    }
+
+    public Hand(String name, int maxCardAmount) {
+        this(name, maxCardAmount, false);
+    }
+
+    public Hand(String name, int maxCardAmount, boolean visible) {
         super();
+        this.name = name;
         this.maxCardAmount = maxCardAmount;
         this.visible = visible;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -50,8 +67,8 @@ public class Hand extends AbstractCardOwner {
     public void setVisibility(boolean visible) {
         this.visible = visible;
     }
-
-    public void order() {
+    
+    public void sort() {
         Collections.sort(cards, new CardComparator());
     }
 }

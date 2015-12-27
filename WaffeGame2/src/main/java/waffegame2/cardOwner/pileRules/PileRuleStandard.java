@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package waffegame2.domain;
+package waffegame2.cardOwner.pileRules;
 
+import waffegame2.cardOwner.PileType;
+import waffegame2.card.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,7 +15,9 @@ import java.util.List;
  *
  * @author Walter
  */
-public class PileRuleStandard extends AbstractPileRule {
+public class PileRuleStandard implements PileRule {
+
+    private List<Card> cards;
 
     @Override
     public PileType checkType(List<Card> list) {
@@ -64,7 +68,7 @@ public class PileRuleStandard extends AbstractPileRule {
         }
 
         for (int startIndex = 0; startIndex < list.size(); startIndex++) {
-            switch (testStraightMethod(list, startIndex)) {
+            switch (checkStraightFrom(list, startIndex)) {
                 case 1:
                     return true;
                 case -1:
@@ -74,7 +78,7 @@ public class PileRuleStandard extends AbstractPileRule {
         return false;
     }
 
-    private int testStraightMethod(List<Card> list, int startIndex) {
+    private int checkStraightFrom(List<Card> list, int startIndex) {
         int jokers = countJokers();
         Value previousValue = list.get(startIndex).getValue();
         int i = startIndex;
