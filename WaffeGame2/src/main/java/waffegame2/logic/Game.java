@@ -7,7 +7,6 @@ package waffegame2.logic;
 
 import java.util.ArrayList;
 import java.util.List;
-import waffegame2.cardOwner.*;
 import waffegame2.player.*;
 import waffegame2.ui.*;
 
@@ -38,16 +37,32 @@ public class Game {
         setup();
 
         //Start game
-        for (int i = 0; true;) {
-            Player ender = rule.checkEndState();
-            if (ender != null) {
-                ui.println("\n\n\n" + ender + " is the Winner!\n\nThe game took " + i + " turns to play.");
+        for (int turn = 0; true;) {
+            if (checkEndState(turn)) {
                 break;
             }
-            Player playerInTurn = players.get(i % players.size());
+            Player playerInTurn = players.get(turn % players.size());
             int turnShift = rule.playTurn(playerInTurn);
-            i += turnShift;
+            turn += turnShift;
         }
+    }
+
+    private boolean checkEndState(int turn) {
+        List<Player> winners = rule.checkEndState();
+        if (!winners.isEmpty()) {
+            if (winners.size() == 1) {
+                ui.println("\n\n\n" + winners.get(0) + " is the Winner!\n\nThe game took " + turn + " turns to play.");
+            } else {
+                String str = "\n\n\n";
+                for (Player winner : winners) {
+                    str += winner + "\n";
+                }
+                str += " are the Winners!\n\nThe game took " + turn + " turns to play.";
+                ui.println(str);
+            }
+            return true;
+        }
+        return false;
     }
 
     public void addPlayer() {
@@ -65,15 +80,9 @@ public class Game {
         }
     }
 
-    public void setup() {
+    private void setup() {
         rule.addPlayers(players);
-        rule.createHands();
-        Pile pile = rule.createPile();
-        Pack pack = rule.createPack();
-        rule.deal();
-
-        ui.setPack(pack);
-        ui.setPile(pile);
+        rule.setup();
     }
 
     public boolean hasPlayer(String name) {

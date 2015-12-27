@@ -87,4 +87,8 @@ public class Play {
         }
         return false;
     }
+
+    public int cardAmount() {
+        return getCards().size();
+    }
 }

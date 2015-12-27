@@ -21,8 +21,6 @@ public abstract class GameLogic implements CardSelector {
 
     protected UI ui;
     protected List<Player> players;
-    protected Pack pack;
-    protected Pile pile;
 
     public GameLogic(UI ui) {
         this.ui = ui;
@@ -33,15 +31,9 @@ public abstract class GameLogic implements CardSelector {
         this.players.addAll(players);
     }
 
-    abstract public Pile createPile();
+    abstract public void setup();
 
-    abstract public Pack createPack();
-
-    abstract public void createHands();
-
-    abstract public void deal();
-
-    abstract public Player checkEndState();
+    abstract public List<Player> checkEndState();
 
     abstract public int playTurn(Player player);
 

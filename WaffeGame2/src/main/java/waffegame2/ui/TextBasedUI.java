@@ -45,7 +45,7 @@ public class TextBasedUI implements UI {
     
     @Override
     public void printSeparator() {
-        System.out.println("\n\n\n\n\n\n\n\n----------------------------------------------------------------\n");
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n----------------------------------------------------------------\n");
     }
 
     @Override
