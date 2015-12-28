@@ -1,32 +1,30 @@
-package waffegame2.cardOwner;
+package waffegame2.cardOwner.pileRules;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import waffegame2.cardOwner.pileRules.PileRuleStandard;
-import waffegame2.card.Value;
-import waffegame2.card.Suit;
-import waffegame2.card.Card;
+import waffegame2.card.*;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import waffegame2.cardOwner.*;
 
 /**
  *
  * @author Walter
  */
-public class PileAndPileRuleTests {
+public class PileRuleWaffeGame2Tests {
 
     private Pack pack;
     private Pile pile;
     private Hand hand;
     private List<Card> cards;
 
-    public PileAndPileRuleTests() {
+    public PileRuleWaffeGame2Tests() {
     }
 
     private void checkAdd(PileType type) {
@@ -38,27 +36,16 @@ public class PileAndPileRuleTests {
     @Before
     public void setUp() {
         pack = new Pack(1, 3);
-        pile = new Pile(new PileRuleStandard());
+        pile = new Pile(new PileRuleWaffeGame2());
         hand = new Hand(10);
         cards = new ArrayList();
         cards.add(new Card(Value.TWO, Suit.DIAMONDS));
         cards.add(new Card(Value.ACE, Suit.DIAMONDS));
     }
-    
-    @Test
-    public void pileTypeTest() {
-        assertEquals("Empty",PileType.NULL.toString());
-        assertEquals("Suit",PileType.SUIT.toString());
-        assertEquals("Straight",PileType.STRAIGHT.toString());
-        assertEquals("Pairs",PileType.PAIRS.toString());
-        assertEquals("Triples",PileType.TRIPLES.toString());
-        assertEquals("Quadruples",PileType.QUADRUPLES.toString());
-    }
 
     @Test
     public void addCardToPile() {
         assertTrue(pile.addCard(new Card(Value.FIVE, Suit.DIAMONDS)));
-        List<Card> cards = new ArrayList();
     }
 
     @Test

@@ -28,7 +28,7 @@ public class Play {
         return cardMap;
     }
 
-    public void addCard(CardOwner owner, Card card) {
+    public void addCardFrom(CardOwner owner, Card card) {
         if (cardMap.containsKey(owner)) {
             List<Card> cards = cardMap.get(owner);
             cards.add(card);
@@ -39,7 +39,7 @@ public class Play {
         }
     }
 
-    public void addCards(CardOwner owner, Collection<Card> collection) {
+    public void addCardsFrom(CardOwner owner, Collection<Card> collection) {
         if (cardMap.containsKey(owner)) {
             List<Card> cards = cardMap.get(owner);
             cards.addAll(collection);
@@ -68,6 +68,14 @@ public class Play {
         return false;
     }
 
+    public List<Card> getCards(CardOwner owner) {
+        if (cardMap.containsKey(owner)) {
+            return cardMap.get(owner);
+        } else {
+            return new ArrayList();
+        }
+    }
+
     public List<Card> getCards() {
         List<Card> cards = new ArrayList();
         for (List<Card> list : cardMap.values()) {
@@ -79,10 +87,11 @@ public class Play {
     public boolean transferCards(CardOwner target) {
         if (target.addCards(getCards())) {
             for (CardOwner owner : cardMap.keySet()) {
-                if (!owner.removeCards(cardMap.get(owner))) {
+                if (!owner.removeCards(getCards(owner))) {
                     throw new IllegalStateException("Temporary Play object containing non-existant cards");
                 }
             }
+            cardMap.clear();
             return true;
         }
         return false;

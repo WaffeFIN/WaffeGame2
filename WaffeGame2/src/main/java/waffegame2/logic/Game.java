@@ -23,14 +23,18 @@ public class Game {
     public Game() {
         this.ui = new TextBasedUI();
         this.players = new ArrayList();
+        this.rule = new GameLogicWaffeGame2(ui);
+    }
+
+    public void setGamelogic(GameLogic rule) {
+        this.rule = rule;
     }
 
     public void run() {
-        //Options
-        rule = new GameLogicWaffeGame2(ui);
+        //TODO: Options
 
         //Preperations
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < rule.getMaxPlayers(); i++) {
             ui.println("Player " + (i + 1) + ", please enter your name:");
             addPlayer();
         }

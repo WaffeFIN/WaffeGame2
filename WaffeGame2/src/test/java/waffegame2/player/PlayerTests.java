@@ -5,8 +5,14 @@ package waffegame2.player;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import static org.junit.Assert.*;
+import waffegame2.logic.DummySelector;
+import static org.junit.Assert.assertEquals;
+import org.junit.Before;
 import org.junit.Test;
+import waffegame2.card.Card;
+import waffegame2.card.Suit;
+import waffegame2.card.Value;
+import waffegame2.cardOwner.Hand;
 
 /**
  *
@@ -14,7 +20,27 @@ import org.junit.Test;
  */
 public class PlayerTests {
 
+    private Player player;
+
     public PlayerTests() {
     }
 
+    @Before
+    public void setUp() {
+        player = new Player("Name", new DummySelector());
+    }
+
+    @Test
+    public void testCardAmount() {
+        Hand hand1 = new Hand(player.getName() + "'s Hand", 23);
+        Hand hand2 = new Hand(player.getName() + "'s Hand numero dos", 123);
+        hand1.addCard(new Card(Value.ACE, Suit.HEARTS));
+        hand1.addCard(new Card(Value.KING, Suit.HEARTS));
+        hand1.addCard(new Card(Value.QUEEN, Suit.HEARTS));
+        hand2.addCard(new Card(Value.JACK, Suit.HEARTS));
+        hand2.addCard(new Card(Value.TEN, Suit.HEARTS));
+        player.addHand(hand1);
+        player.addHand(hand2);
+        assertEquals(5, player.cardAmount());
+    }
 }

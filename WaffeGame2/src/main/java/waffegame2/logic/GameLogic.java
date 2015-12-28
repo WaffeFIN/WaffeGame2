@@ -8,8 +8,6 @@ package waffegame2.logic;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import waffegame2.cardOwner.*;
-import waffegame2.player.CardSelector;
 import waffegame2.player.Player;
 import waffegame2.ui.UI;
 
@@ -26,6 +24,8 @@ public abstract class GameLogic implements CardSelector {
         this.ui = ui;
         this.players = new ArrayList();
     }
+    
+    abstract public int getMaxPlayers();
 
     public void addPlayers(Collection<Player> players) {
         this.players.addAll(players);

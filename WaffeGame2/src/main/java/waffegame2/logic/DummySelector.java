@@ -6,24 +6,17 @@
 package waffegame2.logic;
 
 import waffegame2.cardOwner.Play;
-import waffegame2.player.CardSelector;
 import waffegame2.player.Player;
 
 /**
  *
  * @author Walter
  */
-public class AIWaffeGame2 implements CardSelector {
-
-    private GameLogic logic;
-
-    public AIWaffeGame2(GameLogic logic) {
-        this.logic = logic;
-    }
+public class DummySelector implements CardSelector {
 
     @Override
     public Play selectCards(Player player) {
-        return null; //:D
+        return new Play(); //:D
     }
 
 }

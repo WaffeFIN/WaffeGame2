@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package waffegame2.player;
+package waffegame2.logic;
 
 import waffegame2.cardOwner.Play;
+import waffegame2.player.Player;
 
 /**
  *

@@ -36,6 +36,7 @@
 		Pari ongelmaa sain korjattua, mutta on korjattava testiä, joka tarkistaa onko pino suora vai ei. Ongelmana on se, että suora saa olla syklinen (esim. 2 - A - K) ja nämä tilanteet sekä jokereiden lisäys aiheuttaa ongelmia.
 	03:30
 
+	
 	14
 		Debuggaus jatkuu. Kirjotain pinon suoratesti-metodin uudelleen.
 	14:30
@@ -83,3 +84,17 @@
 		Koodin siistintää ja testausta. On mietittävä teko-älyn implementaatiota (etukäteen)
 	03
 	
+28.12
+	
+	15
+		Pientä yleistä viilausta/refaktorointia. Teen testit valmiiksi
+	16
+		Tein Play-luokan testit.
+	17
+	
+	
+	19
+		Lisää testejä
+	20
+		PIT-raportti ja luokkakaavio tehty
+	21

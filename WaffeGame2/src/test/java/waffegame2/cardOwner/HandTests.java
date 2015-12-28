@@ -5,79 +5,29 @@
  */
 package waffegame2.cardOwner;
 
-import waffegame2.card.Value;
-import waffegame2.card.Suit;
-import waffegame2.card.Card;
 import java.util.ArrayList;
 import java.util.List;
-import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.*;
+import waffegame2.card.Card;
+import waffegame2.card.Suit;
+import waffegame2.card.Value;
 
 /**
  *
  * @author Walter
  */
-public class PackAndHandTests {
+public class HandTests {
 
-    private Pack pack;
     private Hand hand;
 
-    public PackAndHandTests() {
+    public HandTests() {
     }
 
     @Before
     public void setUp() {
-        pack = new Pack(1, 3);
         hand = new Hand(10);
-    }
-
-    @Test
-    public void testPacktoString() {
-        List<Card> cards = new ArrayList();
-        cards.add(new Card(Value.ACE, Suit.SPADES));
-        cards.add(new Card(Value.ACE, Suit.HEARTS));
-        cards.add(new Card(Value.JOKER, Suit.JOKER));
-        cards.add(new Card(Value.TWO, Suit.CLUBS));
-        cards.add(new Card(Value.KING, Suit.DIAMONDS));
-        pack.addCards(cards);
-        assertEquals(true, pack.toString().contains("Ace of Spades"));
-        assertEquals(true, pack.toString().contains("Ace of Hearts"));
-        assertEquals(true, pack.toString().contains("Joker"));
-        assertEquals(true, pack.toString().contains("2 of Clubs"));
-        assertEquals(true, pack.toString().contains("King of Diamonds"));
-    }
-
-    @Test
-    public void testPackSize1() {
-        assertEquals(pack.cardAmount(), 1 * (52 + 3));
-        Pack otherPack = new Pack(3, 4);
-        assertEquals(otherPack.cardAmount(), 3 * (52 + 4));
-    }
-
-    @Test
-    public void testPackSize2() {
-        pack = new Pack();
-        assertEquals(pack.cardAmount(), 0);
-    }
-
-    @Test
-    public void testPackJokers() {
-        int jokers = 0;
-        for (Card card : pack.getCards()) {
-            if (card.isJoker()) {
-                jokers++;
-            }
-        }
-        assertEquals(1 * 3, jokers);
-        jokers = 0;
-        Pack otherPack = new Pack(3, 4);
-        for (Card card : otherPack.getCards()) {
-            if (card.isJoker()) {
-                jokers++;
-            }
-        }
-        assertEquals(3 * 4, jokers);
     }
 
     @Test
@@ -120,6 +70,22 @@ public class PackAndHandTests {
     }
 
     @Test
+    public void testHandMaxSize3() {
+        List<Card> cards = new ArrayList();
+        for (int i = 0; i < 11; i++) {
+            cards.add(new Card(Value.ACE, Suit.SPADES));
+        }
+        CardOwner owner = new Pack();
+        assertTrue(owner.addCards(cards));
+        int amount = owner.cardAmount();
+        assertEquals(false, owner.transferCards(hand));
+        assertEquals(true, owner.cardAmount() == amount);
+        owner.removeCard(owner.getCard());
+        assertEquals(true, owner.transferCards(hand));
+        assertEquals(false, owner.cardAmount() == amount);
+    }
+
+    @Test
     public void testHandAddCards() {
         Hand otherHand = new Hand(0);
         List<Card> cards = new ArrayList();
@@ -131,7 +97,7 @@ public class PackAndHandTests {
     }
 
     @Test
-    public void testHandOrdering() {
+    public void testHandSorting() {
         List<Card> cards = new ArrayList();
         cards.add(new Card(Value.ACE, Suit.SPADES));
         cards.add(new Card(Value.QUEEN, Suit.HEARTS));
@@ -146,5 +112,4 @@ public class PackAndHandTests {
                 + "Queen of Hearts\n"
                 + "King of Diamonds"));
     }
-
 }

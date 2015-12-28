@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import waffegame2.card.Card;
 import waffegame2.cardOwner.*;
-import waffegame2.cardOwner.pileRules.PileRuleStandard;
+import waffegame2.cardOwner.pileRules.PileRuleWaffeGame2;
 import waffegame2.player.Player;
 import waffegame2.ui.UI;
 
@@ -24,6 +24,11 @@ public class GameLogicWaffeGame2 extends GameLogic {
 
     public GameLogicWaffeGame2(UI ui) {
         super(ui);
+    }
+
+    @Override
+    public int getMaxPlayers() {
+        return 2;
     }
 
     @Override
@@ -44,7 +49,7 @@ public class GameLogicWaffeGame2 extends GameLogic {
     }
 
     private void createPile() {
-        pile = new Pile(new PileRuleStandard());
+        pile = new Pile(new PileRuleWaffeGame2());
     }
 
     private void createHands() {//<-------------------------------- make cleaner
@@ -121,7 +126,7 @@ public class GameLogicWaffeGame2 extends GameLogic {
         Play selected = new Play();
 
         for (Hand hand : player.getHands()) {
-            playable.addCards(hand, hand.getCards());
+            playable.addCardsFrom(hand, hand.getCards());
         }
 
         while (true) {
@@ -149,7 +154,7 @@ public class GameLogicWaffeGame2 extends GameLogic {
                                 if (selected.getCards().contains(card)) {
                                     selected.removeCard(owner, card);
                                 } else {
-                                    selected.addCard(owner, card);
+                                    selected.addCardFrom(owner, card);
                                 }
                             }
                             i++;

@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author Walter
  */
-public class PileRuleStandard implements PileRule {
+public class PileRuleWaffeGame2 implements PileRule {
 
     private List<Card> cards;
 

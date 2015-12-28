@@ -5,6 +5,7 @@
  */
 package waffegame2.player;
 
+import waffegame2.logic.CardSelector;
 import java.util.ArrayList;
 import java.util.List;
 import waffegame2.cardOwner.Hand;
@@ -19,25 +20,11 @@ public class Player {
     private String name;
     protected List<Hand> hands;
     private CardSelector selector;
-    private int points;
 
     public Player(String name, CardSelector selector) {
         this.name = name;
         this.hands = new ArrayList();
         this.selector = selector;
-        this.points = 0;
-    }
-
-    public int getPoints() {
-        return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
-    public void addPoints(int points) {
-        this.points += points;
     }
 
     public String getName() {
