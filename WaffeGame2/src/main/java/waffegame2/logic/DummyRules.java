@@ -9,7 +9,9 @@ import waffegame2.ui.UI;
 
 /**
  *
- * @author Walter
+ * @author Walter Grönholm
+ * @version 1.0
+ * @since 2016-01-02
  */
 public class DummyRules implements GameRules {
 

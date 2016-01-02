@@ -6,8 +6,11 @@
 package waffegame2.card;
 
 /**
+ * Enum for values, including joker.
  *
- * @author Walter
+ * @author Walter Grönholm
+ * @version 1.0
+ * @since 2016-01-02
  */
 public enum Value {
 
@@ -24,6 +27,12 @@ public enum Value {
         return value;
     }
 
+    /**
+     * The method searches through all Values and returns the highest integer
+     * value found
+     *
+     * @return the highest integer value
+     */
     public static int max() {
         int max = Integer.MIN_VALUE;
         for (Value value : Value.values()) {

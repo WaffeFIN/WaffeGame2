@@ -7,13 +7,14 @@ package waffegame2.logic;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import waffegame2.player.*;
 import waffegame2.ui.*;
 
 /**
  *
- * @author Walter
+ * @author Walter Grönholm
+ * @version 1.0
+ * @since 2016-01-02
  */
 public class Game {
 

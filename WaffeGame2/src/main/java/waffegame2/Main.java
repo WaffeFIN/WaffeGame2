@@ -4,13 +4,12 @@ import waffegame2.logic.Game;
 
 /**
  *
- * @author Walter
+ * @author Walter Grönholm
+ * @version 1.0
+ * @since 2016-01-02
  */
 public class Main {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         Game game = new Game();
         game.run();

@@ -6,8 +6,11 @@
 package waffegame2.card;
 
 /**
+ * Enum for suits, including joker.
  *
- * @author Walter
+ * @author      Walter Grönholm
+ * @version     1.0
+ * @since       2016-01-02
  */
 public enum Suit {
 

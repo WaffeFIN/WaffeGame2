@@ -13,7 +13,9 @@ import java.util.List;
 
 /**
  *
- * @author Walter
+ * @author Walter Grönholm
+ * @version 1.0
+ * @since 2016-01-02
  */
 public class PileRuleWaffeGame2 implements PileRule {
 

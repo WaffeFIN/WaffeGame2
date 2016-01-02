@@ -12,8 +12,11 @@ import waffegame2.player.Player;
 import waffegame2.ui.UI;
 
 /**
+ * Abstract class extended by all game logic
  *
- * @author Walter
+ * @author Walter Grönholm
+ * @version 1.0
+ * @since 2016-01-02
  */
 public abstract class GameLogic {
 

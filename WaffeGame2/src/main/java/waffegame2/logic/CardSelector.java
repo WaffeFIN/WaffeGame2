@@ -11,8 +11,11 @@ import waffegame2.cardOwner.Hand;
 import waffegame2.player.Player;
 
 /**
+ * Interface for a card selector e.g. the UI or the AI
  *
- * @author Walter
+ * @author Walter Grönholm
+ * @version 1.0
+ * @since 2016-01-02
  */
 public interface CardSelector {
 

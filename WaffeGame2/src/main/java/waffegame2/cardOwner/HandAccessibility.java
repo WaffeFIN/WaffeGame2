@@ -6,8 +6,11 @@
 package waffegame2.cardOwner;
 
 /**
+ * Enum for the accessibility level of a hand.
  *
- * @author Walter
+ * @author Walter Grönholm
+ * @version 1.0
+ * @since 2016-01-02
  */
 public enum HandAccessibility {
 

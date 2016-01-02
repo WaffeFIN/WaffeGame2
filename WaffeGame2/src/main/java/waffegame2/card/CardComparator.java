@@ -1,8 +1,11 @@
 package waffegame2.card;
 
 /**
- *
- * @author Walter
+ * Used to compare and sort cards. Compares only the cards' values
+ * 
+ * @author      Walter Grönholm
+ * @version     1.0
+ * @since       2016-01-02
  */
 import java.util.Comparator;
 

@@ -6,13 +6,16 @@
 package waffegame2.card;
 
 /**
+ * A card containing a suit and value.
  *
- * @author Walter
+ * @author      Walter Grönholm
+ * @version     1.0
+ * @since       2016-01-02
  */
 public class Card {
 
-    private Value value;
-    private Suit suit;
+    private final Value value;
+    private final Suit suit;
 
     public Card(Value value, Suit suit) {
         this.value = value;

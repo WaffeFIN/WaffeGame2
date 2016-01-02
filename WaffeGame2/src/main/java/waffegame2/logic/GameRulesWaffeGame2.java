@@ -8,8 +8,11 @@ package waffegame2.logic;
 import waffegame2.ui.UI;
 
 /**
+ * The class which holds the data for all variable rules for WaffeGame2
  *
- * @author Walter
+ * @author Walter Grönholm
+ * @version 1.0
+ * @since 2016-01-02
  */
 public class GameRulesWaffeGame2 implements GameRules {
 

@@ -16,8 +16,11 @@ import waffegame2.cardOwner.Hand;
 import waffegame2.player.Player;
 
 /**
+ * A text based user interface
  *
- * @author Walter
+ * @author      Walter Grönholm
+ * @version     1.0
+ * @since       2016-01-02
  */
 public class TextBasedUI implements UI {
 
@@ -52,7 +55,7 @@ public class TextBasedUI implements UI {
     }
 
     @Override
-    public void printSeparator() {
+    public void showSeparator() {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n----------------------------------------------------------------\n");
     }
 

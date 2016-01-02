@@ -6,8 +6,11 @@
 package waffegame2.cardOwner;
 
 /**
+ * Enum for the type of the pile.
  *
- * @author Walter
+ * @author Walter Grönholm
+ * @version 1.0
+ * @since 2016-01-02
  */
 public enum PileType {
 

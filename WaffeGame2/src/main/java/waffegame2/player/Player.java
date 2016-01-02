@@ -12,8 +12,12 @@ import waffegame2.card.Card;
 import waffegame2.cardOwner.Hand;
 
 /**
+ * A user of the game/program. The CardSelector will determine who has control
+ * over the Player's actions.
  *
- * @author Walter
+ * @author Walter Grönholm
+ * @version 1.0
+ * @since 2016-01-02
  */
 public class Player {
 

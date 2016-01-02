@@ -14,20 +14,25 @@ import waffegame2.logic.CardSelector;
 import waffegame2.player.Player;
 
 /**
+ * The User interface - interface
  *
- * @author Walter
+ * @author      Walter Grönholm
+ * @version     1.0
+ * @since       2016-01-02
  */
 public interface UI extends CardSelector {
 
+    //Essential
+    public String getString();
+
+    public void waitForPlayerToContinue();
+    
+    //Extra
     public void print(String text);
 
     public void println(String text);
-
-    public String getString();
-
-    public void printSeparator(); //TextUI 
-
-    public void waitForPlayerToContinue();
+    
+    public void showSeparator(); //TextUIOnly 
 
     public void showInstructions(String name);
 

@@ -6,6 +6,7 @@
 package waffegame2.logic;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import waffegame2.card.Card;
 import waffegame2.cardOwner.*;
@@ -14,8 +15,11 @@ import waffegame2.player.Player;
 import waffegame2.ui.UI;
 
 /**
+ * The main logic to the WaffeGame2
  *
- * @author Walter
+ * @author Walter Grönholm
+ * @version 1.0
+ * @since 2016-01-02
  */
 public class GameLogicWaffeGame2 extends GameLogic {
 
@@ -154,14 +158,14 @@ public class GameLogicWaffeGame2 extends GameLogic {
     }
 
     private void playTurn(Player player) {
-        ui.printSeparator();
+        ui.showSeparator();
         while (true) {
             for (Hand hand : player.getHands()) {
                 hand.sort();
             }
             pile.sort();
             CardCollection play = getPlay(player);
-            List<Card> cardsPlayed = play.getCards();
+            Collection<Card> cardsPlayed = play.getCards();
             if (cardsPlayed.isEmpty()) {
                 if (!rules.mustHitIfAbleTo() || isAbleToHit(player, pile)) {
                     turnPassed(player);

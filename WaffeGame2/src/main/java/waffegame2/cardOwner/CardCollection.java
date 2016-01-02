@@ -13,8 +13,14 @@ import java.util.Map;
 import waffegame2.card.Card;
 
 /**
+ * A collection of cards from different owners. This class is used as an
+ * assisting class when a selection from multiple CardOwners' cards is made. A
+ * CardCollection doesn't own cards, but help in transferring them between
+ * multiple owners.
  *
- * @author Walter
+ * @author Walter Grönholm
+ * @version 1.0
+ * @since 2016-01-02
  */
 public class CardCollection {
 
@@ -28,6 +34,13 @@ public class CardCollection {
         return cardMap;
     }
 
+    /**
+     * Adds the card to a map with the specified owner. The card is not
+     * transfered
+     *
+     * @param owner CardOwner of the card
+     * @param card the card to be added
+     */
     public void addCardFrom(CardOwner owner, Card card) {
         if (cardMap.containsKey(owner)) {
             List<Card> cards = cardMap.get(owner);
@@ -39,6 +52,13 @@ public class CardCollection {
         }
     }
 
+    /**
+     * Adds the cards to a map with the specified owner. The cards are not
+     * transfered
+     *
+     * @param owner CardOwner of the card
+     * @param collection the cards to be added
+     */
     public void addCardsFrom(CardOwner owner, Collection<Card> collection) {
         if (cardMap.containsKey(owner)) {
             List<Card> cards = cardMap.get(owner);
@@ -50,6 +70,15 @@ public class CardCollection {
         }
     }
 
+    /**
+     * Removes the card from the map with the specified owner.
+     *
+     * @param owner CardOwner of the card
+     * @param card the card to be removed
+     *
+     * @return true if the map contains the specified card with the specified
+     * owner
+     */
     public boolean removeCard(CardOwner owner, Card card) {
         if (cardMap.containsKey(owner)) {
             List<Card> cards = cardMap.get(owner);
@@ -58,6 +87,15 @@ public class CardCollection {
         return false;
     }
 
+    /**
+     * Removes the cards from the map with the specified owner.
+     *
+     * @param owner CardOwner of the card
+     * @param collection the cards to be removed
+     *
+     * @return true if the map contains the specified cards with the specified
+     * owner
+     */
     public boolean removeCards(CardOwner owner, Collection<Card> collection) {
         if (cardMap.containsKey(owner)) {
             List<Card> cards = cardMap.get(owner);
@@ -68,6 +106,15 @@ public class CardCollection {
         return false;
     }
 
+    /**
+     * Returns all cards that have been added with the specified owner to the
+     * CardCollection.
+     *
+     * @param owner CardOwner of the card
+     *
+     * @return List of cards that had been added to the CardCollection with the
+     * specified owner
+     */
     public List<Card> getCards(CardOwner owner) {
         if (cardMap.containsKey(owner)) {
             return cardMap.get(owner);
@@ -76,19 +123,35 @@ public class CardCollection {
         }
     }
 
-    public List<Card> getCards() {
-        List<Card> cards = new ArrayList();
+    /**
+     * Returns all cards that have been added to the CardCollection.
+     *
+     * @return Collection of cards that had been added to the CardCollection
+     */
+    public Collection<Card> getCards() {
+        Collection<Card> cards = new ArrayList();
         for (List<Card> list : cardMap.values()) {
             cards.addAll(list);
         }
         return cards;
     }
 
+    /**
+     * Transfers all cards to the target CardOwner. If the addition of all cards
+     * is successful, the cards are removed from their previous CardOwner.
+     *
+     * @param target The transfer target
+     *
+     * @return true if the target does accept the cards.
+     *
+     * @throws IllegalStateException if the CardCollection contains any cards
+     * with false owner
+     */
     public boolean transferCards(CardOwner target) {
         if (target.addCards(getCards())) {
             for (CardOwner owner : cardMap.keySet()) {
                 if (!owner.removeCards(getCards(owner))) {
-                    throw new IllegalStateException("Temporary Play object containing non-existant cards");
+                    throw new IllegalStateException("Temporary CardCollection object contains cards with false owner");
                 }
             }
             cardMap.clear();

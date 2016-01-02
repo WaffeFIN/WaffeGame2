@@ -12,8 +12,12 @@ import java.util.Collections;
 import waffegame2.player.Player;
 
 /**
+ * A CardOwner that is owned by a player, therefore has an accessibility level.
+ * Can be limited to be a certain size.
  *
- * @author Walter
+ * @author Walter Grönholm
+ * @version 1.0
+ * @since 2016-01-02
  */
 public class Hand extends CardOwner {
 

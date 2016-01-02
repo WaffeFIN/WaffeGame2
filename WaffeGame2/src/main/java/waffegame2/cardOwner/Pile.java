@@ -12,6 +12,14 @@ import java.util.Collection;
 import java.util.Collections;
 import waffegame2.card.CardComparator;
 
+/**
+ * A CardOwner which can be considered the "centre of the playing field". When
+ * adding cards, it checks whether they follow the pile's rules.
+ *
+ * @author Walter Grönholm
+ * @version 1.0
+ * @since 2016-01-02
+ */
 public class Pile extends CardOwner {
 
     private PileType type;

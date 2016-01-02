@@ -53,7 +53,7 @@ public class TextBasedUITests {
         ui.print("this text is here");
         ui.println(", but this text is here too");
         ui.print("this text is on the next row?");
-        ui.printSeparator();
+        ui.showSeparator();
         checkContains("this text is here, but this text is here too", true);
         checkContains("\nthis text is on the next row?", true);
         checkContains("?\n\n", true);

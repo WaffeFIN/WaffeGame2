@@ -13,7 +13,9 @@ import waffegame2.player.Player;
 
 /**
  *
- * @author Walter
+ * @author Walter Grönholm
+ * @version 1.0
+ * @since 2016-01-02
  */
 public class DummySelector implements CardSelector {
 
