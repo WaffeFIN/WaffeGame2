@@ -98,3 +98,44 @@
 	20
 		PIT-raportti ja luokkakaavio tehty
 	21
+		Koodikatselmointi
+	22
+		Koodikatselmointi
+	23
+	
+29.12
+
+	14
+		Teen uuden luokan GameRules, jonka avulla sääntöjä voi muuttaa. Mietin graaffisen käyttöliittymän implementaatiota
+	15
+	
+1.1.2016
+
+	14
+		Alotin GUIn rakentamista
+	15
+		-"-
+	16
+		Siistin pelilogiikkaa GUI:ta varten
+	17
+		-"-
+	18
+	
+	
+	19
+		Vieläkin sitä samaa. Muutin GameLogic:in niin ettei se enään implementoi CardSelectoria, vaan siirsin sen UI:lle. Siirsin samalla metodeja sinne minne ne kuuluu.
+	20
+		Koodin siistintää. Lisäsin vaihtoehdon, jonka avulla voi muuttaa jos pelaaja saa käyttää toisten kortteja. Tein HandAccessibility enumin.
+	21
+		Sitä samaa. Ohjelman testausta. Keskityn tämän jälkeen GUIn tekemiseen.
+	22
+	
+2.1.2016
+	
+	14
+		Korjaan luokkakaaviot yms.
+	15
+		Tein testejä mm. TextBasedUI:lle, PIT-raportti
+	16
+		Commit ja push
+	17

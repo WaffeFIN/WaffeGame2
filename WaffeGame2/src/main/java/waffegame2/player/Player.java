@@ -8,8 +8,8 @@ package waffegame2.player;
 import waffegame2.logic.CardSelector;
 import java.util.ArrayList;
 import java.util.List;
+import waffegame2.card.Card;
 import waffegame2.cardOwner.Hand;
-import waffegame2.cardOwner.Play;
 
 /**
  *
@@ -18,7 +18,7 @@ import waffegame2.cardOwner.Play;
 public class Player {
 
     private String name;
-    protected List<Hand> hands;
+    private List<Hand> hands;
     private CardSelector selector;
 
     public Player(String name, CardSelector selector) {
@@ -59,8 +59,8 @@ public class Player {
         return cardAmount;
     }
 
-    public Play selectCards() {
-        return selector.selectCards(this);
+    public List<Card> selectCards(List<Hand> playable) {
+        return selector.selectCards(this, playable);
     }
 
     @Override

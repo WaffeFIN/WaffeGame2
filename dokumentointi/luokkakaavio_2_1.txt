@@ -1,0 +1,34 @@
+
+[Game]-1>[<<Abstract>>;GameLogic]
+[Game]-.-uses>[<<Interface>>;GameRules]
+[GameLogicWaffeGame2]-^[<<Abstract>>;GameLogic]
+[GameLogicWaffeGame2]-1>[GameRulesWaffeGame2]
+[GameRulesWaffeGame2]-.-^[<<Interface>>;GameRules]
+
+[Game]-2>[Player|name]
+[Player|name]<uses-.-[GameLogicWaffeGame2]
+[Player|name]-1>[<<Interface>>;CardSelector]
+[AI]-.-^[<<Interface>>;CardSelector]
+
+[Game]-1>[<<Interface>>;UI]
+[<<Interface>>;UI]-.-extends^[<<Interface>>;CardSelector]
+[TextBasedUI]-.-^[<<Interface>>;UI]
+[GraphicalUI]-.-^[<<Interface>>;UI]
+[GameLogicWaffeGame2]-.-uses>[<<Interface>>;UI]
+
+[Player|name]-2..3>[Hand|acc : HandAccessibility]
+
+[GameLogicWaffeGame2]-1>[Pack]
+[GameLogicWaffeGame2]-1>[Pile]
+[GameLogicWaffeGame2]-.-uses>[Play]
+
+[Hand|acc : HandAccessibility]-0..10>[Card|value;suit]
+[<<Abstract>>;CardOwner]^-[Hand]
+[<<Abstract>>;CardOwner]^-[Pack]
+[<<Abstract>>;CardOwner]^-[Pile|type : PileType]
+[Play]-*>[<<Abstract>>;CardOwner]
+[Pile]-1>[PileRuleWaffeGame2]
+[Pile]-*>[Card]
+[Pack]-0..55>[Card]
+[Play]-*>[Card]
+[PileRule]^-.-[PileRuleWaffeGame2]

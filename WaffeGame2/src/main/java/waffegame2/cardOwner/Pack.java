@@ -16,16 +16,23 @@ import java.util.Collections;
  */
 public class Pack extends CardOwner {
 
+    private int packs;
+    private int jokers;
+
     public Pack() {
         super();
+        this.packs = 0;
+        this.jokers = 0;
     }
 
     public Pack(int packs, int jokers) {
         super();
-        createCards(packs, jokers);
+        this.packs = packs;
+        this.jokers = jokers;
+        createCards();
     }
 
-    private void createCards(int packs, int jokers) {
+    public void createCards() {
         for (int i = 0; i < packs; i++) {
             for (int j = 0; j < jokers; j++) {
                 addCard(new Card(Value.JOKER, Suit.JOKER));
@@ -45,7 +52,7 @@ public class Pack extends CardOwner {
     public void shuffle() {
         Collections.shuffle(cards);
     }
-    
+
     @Override
     public String getName() {
         return "Pack";

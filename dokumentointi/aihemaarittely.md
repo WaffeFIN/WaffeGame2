@@ -35,8 +35,9 @@ Jokeria ei aina pysty lyödä:
 * Uuden kaksinpelin aloittamisen
 * [BONUS] Uuden yksinpelin aloittamisen tietokonetta vastaan
 * Omien korttien valitseminen kädestä ja pöydästä
-* Korttien laittaminen pelikentälle
-  * Onnistuu vain jos on valittu ainakin yksi kortti, ja jos kaikki seuraa samaa "tyyppiä" sekä jos
+* Korttien laittaminen pelikentälle. Onnistuu vain jos
+  * on valinnut ainakin yhden kortin, ja
+  * kaikki kortit seuraa samaa "tyyppiä" sekä
   * suorassa/ryhmässä ei ole liikaa kortteja
 * Oman vuoron ohitus
 	

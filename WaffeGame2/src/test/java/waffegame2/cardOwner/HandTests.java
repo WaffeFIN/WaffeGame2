@@ -36,16 +36,12 @@ public class HandTests {
     }
 
     @Test
-    public void testDefaultHandVisibility() {
-        assertEquals(false, hand.isVisible());
+    public void testDefaultHandAccessibility() {
+        assertEquals(HandAccessibility.PRIVATE, hand.getAccessibility());
     }
 
     @Test
-    public void testHandVisibility() {
-        hand.setVisibility(true);
-        assertEquals(true, hand.isVisible());
-        hand.setVisibility(false);
-        assertEquals(false, hand.isVisible());
+    public void testHandAccessibility() {
     }
 
     @Test

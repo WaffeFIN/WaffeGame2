@@ -5,7 +5,9 @@
  */
 package waffegame2.logic;
 
-import waffegame2.cardOwner.Play;
+import java.util.List;
+import waffegame2.card.Card;
+import waffegame2.cardOwner.Hand;
 import waffegame2.player.Player;
 
 /**
@@ -14,5 +16,5 @@ import waffegame2.player.Player;
  */
 public interface CardSelector {
 
-    public Play selectCards(Player player);
+    public List<Card> selectCards(Player player, List<Hand> playable);
 }

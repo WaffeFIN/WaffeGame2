@@ -5,7 +5,10 @@
  */
 package waffegame2.logic;
 
-import waffegame2.cardOwner.Play;
+import java.util.ArrayList;
+import java.util.List;
+import waffegame2.card.Card;
+import waffegame2.cardOwner.Hand;
 import waffegame2.player.Player;
 
 /**
@@ -15,8 +18,12 @@ import waffegame2.player.Player;
 public class DummySelector implements CardSelector {
 
     @Override
-    public Play selectCards(Player player) {
-        return new Play(); //:D
+    public List<Card> selectCards(Player player, List<Hand> playable) {
+        List<Card> cards = new ArrayList();
+        for (Hand hand : playable) {
+            cards.addAll(hand.getCards());
+        }
+        return cards; //echo
     }
 
 }

@@ -28,12 +28,9 @@ public class PlayerTests {
     @Before
     public void setUp() {
         player = new Player("Name", new DummySelector());
-    }
 
-    @Test
-    public void testCardAmount() {
-        Hand hand1 = new Hand(player.getName() + "'s Hand", 23);
-        Hand hand2 = new Hand(player.getName() + "'s Hand numero dos", 123);
+        Hand hand1 = new Hand(player, player.getName() + "'s Hand", 23);
+        Hand hand2 = new Hand(player, player.getName() + "'s Hand numero dos", 123);
         hand1.addCard(new Card(Value.ACE, Suit.HEARTS));
         hand1.addCard(new Card(Value.KING, Suit.HEARTS));
         hand1.addCard(new Card(Value.QUEEN, Suit.HEARTS));
@@ -41,6 +38,15 @@ public class PlayerTests {
         hand2.addCard(new Card(Value.TEN, Suit.HEARTS));
         player.addHand(hand1);
         player.addHand(hand2);
+    }
+
+    @Test
+    public void testCardAmount() {
         assertEquals(5, player.cardAmount());
+    }
+
+    @Test
+    public void testCardSelection() {
+        assertEquals(5, player.selectCards(player.getHands()).size());
     }
 }

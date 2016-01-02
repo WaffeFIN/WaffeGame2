@@ -19,8 +19,8 @@ import waffegame2.card.Value;
  */
 public class CardOwnerTests {
     
-    CardOwner owner;
-    CardOwner pack;
+    private CardOwner owner;
+    private CardOwner pack;
     
     public CardOwnerTests() {
     }

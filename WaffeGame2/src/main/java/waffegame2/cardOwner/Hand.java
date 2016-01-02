@@ -9,6 +9,7 @@ import waffegame2.card.CardComparator;
 import waffegame2.card.Card;
 import java.util.Collection;
 import java.util.Collections;
+import waffegame2.player.Player;
 
 /**
  *
@@ -16,27 +17,29 @@ import java.util.Collections;
  */
 public class Hand extends CardOwner {
 
+    private Player player;
     private String name;
     private int maxCardAmount;
-    private boolean visible;
+    private HandAccessibility acc;
 
     public Hand(int maxCardAmount) {
-        this("", maxCardAmount, false);
+        this(null, "", maxCardAmount, HandAccessibility.PRIVATE);
     }
 
-    public Hand(int maxCardAmount, boolean visible) {
-        this("", maxCardAmount, visible);
+    public Hand(Player player, String name, int maxCardAmount) {
+        this(player, name, maxCardAmount, HandAccessibility.PRIVATE);
     }
 
-    public Hand(String name, int maxCardAmount) {
-        this(name, maxCardAmount, false);
-    }
-
-    public Hand(String name, int maxCardAmount, boolean visible) {
+    public Hand(Player player, String name, int maxCardAmount, HandAccessibility acc) {
         super();
+        this.player = player;
         this.name = name;
         this.maxCardAmount = maxCardAmount;
-        this.visible = visible;
+        this.acc = acc;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     @Override
@@ -60,14 +63,14 @@ public class Hand extends CardOwner {
         return false;
     }
 
-    public boolean isVisible() {
-        return visible;
+    public HandAccessibility getAccessibility() {
+        return acc;
     }
 
-    public void setVisibility(boolean visible) {
-        this.visible = visible;
+    public void setAccessibility(HandAccessibility acc) {
+        this.acc = acc;
     }
-    
+
     public void sort() {
         Collections.sort(cards, new CardComparator());
     }

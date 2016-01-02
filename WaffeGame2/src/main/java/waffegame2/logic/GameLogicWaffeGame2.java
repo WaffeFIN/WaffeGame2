@@ -21,31 +21,51 @@ public class GameLogicWaffeGame2 extends GameLogic {
 
     private Pack pack;
     private Pile pile;
+    private GameRulesWaffeGame2 rules;
 
     public GameLogicWaffeGame2(UI ui) {
         super(ui);
+        this.rules = new GameRulesWaffeGame2();
     }
 
     @Override
-    public int getMaxPlayers() {
-        return 2;
+    public String getGameName() {
+        return "WaffeGame2";
     }
 
     @Override
-    public void setup() {
+    public GameRules getRules() {
+        return rules;
+    }
+
+    @Override
+    public void init() {
         createHands();
         createPack();
         createPile();
 
         ui.setPack(pack);
         ui.setPile(pile);
+    }
+
+    @Override
+    public void setup() {
+        for (Player player : players) {
+            for (Hand hand : player.getHands()) {
+                hand.clear();
+            }
+        }
+        pile.clear();
+
+        pack.clear();
+        pack.createCards();
+        pack.shuffle();
 
         deal();
     }
 
     private void createPack() {
         pack = new Pack(1, 3);
-        pack.shuffle();
     }
 
     private void createPile() {
@@ -55,132 +75,142 @@ public class GameLogicWaffeGame2 extends GameLogic {
     private void createHands() {//<-------------------------------- make cleaner
         List<Hand> handList = new ArrayList();
         for (Player player : players) {
-            handList.add(new Hand(player.getName() + "'s Shared Hand", 10, true));
+            HandAccessibility type = HandAccessibility.VISIBLE;
+            if (rules.areSharedHandsEnabled()) {
+                type = HandAccessibility.PUBLIC;
+            }
+            handList.add(new Hand(player, player.getName() + "'s Shared Hand", rules.getMaxCardAmount(), type));
         }
         for (Player player : players) {
-            player.addHand(new Hand(player.getName() + "'s Private Hand", 10));
-            for (Hand hand : handList) {
-                if (hand.getName().equals(player.getName() + "'s Shared Hand")) {
-                    player.addHand(hand);
-                }
-            }
-            for (Hand hand : handList) {
-                if (!hand.getName().equals(player.getName() + "'s Shared Hand")) {
-                    player.addHand(hand);
-                }
+            player.addHand(new Hand(player, player.getName() + "'s Private Hand", rules.getMaxCardAmount()));
+            addHands(player, handList, true);
+            addHands(player, handList, false);
+        }
+    }
+
+    private void addHands(Player player, List<Hand> handList, boolean ownHand) {
+        for (Hand hand : handList) {
+            if (hand.getName().equals(player.getName() + "'s Shared Hand") == ownHand) {
+                player.addHand(hand);
             }
         }
     }
 
     private void deal() {
+        int cardAmount = rules.getStartCardAmount();
+        while (players.size() * cardAmount > pack.cardAmount()) {
+            cardAmount--;
+        }
         for (Player player : players) {
-            pack.transferCards(player.getHand(), pack.getCards(10));
+            pack.transferCards(player.getHand(), pack.getCards(cardAmount));
         }
     }
 
     @Override
-    public List<Player> checkEndState() {
+    public void playGame() {
+        setup();
+        for (int turn = 0; true;) {
+            if (checkEndState()) {
+                break;
+            }
+            Player playerInTurn = players.get(turn % players.size());
+            playTurn(playerInTurn);
+            turn++;
+        }
+    }
+
+    private boolean checkEndState() {
+        List<Player> winners = getWinners();
+        if (!winners.isEmpty()) {
+            if (winners.size() == 1) {
+                ui.showWinner(winners.get(0).getName());
+            } else {
+                List<String> winnersNames = new ArrayList();
+                for (Player winner : winners) {
+                    winnersNames.add(winner.getName());
+                }
+                ui.showWinners(winnersNames);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private List<Player> getWinners() {
         List<Player> winners = new ArrayList();
         for (Player player : players) {
-            Hand privateHand = player.getHand();
-            Hand sharedHand = player.getHand(1);
-            if (privateHand.cardAmount() + sharedHand.cardAmount() == 0) {
+            boolean allHandsAreEmpty = true;
+            for (Hand hand : player.getHands()) {
+                if (hand.getPlayer() == player && hand.cardAmount() > 0) {
+                    allHandsAreEmpty = false;
+                    break;
+                }
+            }
+            if (allHandsAreEmpty) {
                 winners.add(player);
             }
         }
         return winners;
     }
 
-    @Override
-    public int playTurn(Player player) {
+    private void playTurn(Player player) {
         ui.printSeparator();
         while (true) {
             for (Hand hand : player.getHands()) {
                 hand.sort();
             }
             pile.sort();
-            Play play = player.selectCards();
+            CardCollection play = getPlay(player);
             List<Card> cardsPlayed = play.getCards();
             if (cardsPlayed.isEmpty()) {
-                ui.println("--- Turn passed ---");
-                pile.clear();
-                Hand privateHand = player.getHand();
-                Hand sharedHand = player.getHand(1);
-                privateHand.transferCards(sharedHand);
-                dealCardsAfterRound(player, pack);
-                return 1;
+                if (!rules.mustHitIfAbleTo() || isAbleToHit(player, pile)) {
+                    turnPassed(player);
+                    break;
+                } else {
+                    ui.println("--- You must hit a visible card if you are able to! ---");
+                }
             }
             if (play.transferCards(pile)) {
-                return 1;
+                break;
             }
             ui.println("--- Invalid selection! You cannot hit the cards you selected! ---");
         }
     }
 
-    @Override
-    public Play selectCards(Player player) {//<-------------------------------- make cleaner
+    private CardCollection getPlay(Player player) {
 
-        printPreTurn(player);
+        ui.showPreTurn(player.getName() + ", it's your turn!"
+                + "\nPack size: " + pack.cardAmount()
+                + "\nPile: " + pile.getType()
+                + "\n" + pile
+                + "\nPress <Enter> to continue");
+        ui.waitForPlayerToContinue();
 
-        Play playable = new Play();
-        Play selected = new Play();
-
-        for (Hand hand : player.getHands()) {
-            playable.addCardsFrom(hand, hand.getCards());
-        }
+        CardCollection selected = new CardCollection();
+        List<Hand> handList = new ArrayList();
+        handList.addAll(player.getHands());
 
         while (true) {
-            printSelectedCards(playable, selected);
-
-            ui.println(player + ", select cards (enter the numbers corresponding to the cards, separated by a space. E.g. '1 4 5').\nHit the selected cards by entering no numbers");
-            String cmd = ui.getString();
-            if (cmd.equals("")) {
+            ui.showSelectedCards(player, handList, selected);
+            ui.showInstructions(player.getName());
+            List<Card> selection = player.selectCards(handList);
+            if (selection == null) {
                 break;
             }
-            toggleSelectedCards(cmd.split(" "), playable, selected);
+            toggleSelectedCards(selection, handList, selected);
         }
         return selected;
     }
 
-    private void toggleSelectedCards(String[] split, Play playable, Play selected) {
-        for (String str : split) {
-            try {
-                int n = Integer.parseInt(str);
-                if (n >= 0 && n < playable.cardAmount()) {
-                    int i = 0;
-                    for (CardOwner owner : playable.getCardMap().keySet()) {
-                        for (Card card : playable.getCardMap().get(owner)) {
-                            if (i == n) {
-                                if (selected.getCards().contains(card)) {
-                                    selected.removeCard(owner, card);
-                                } else {
-                                    selected.addCardFrom(owner, card);
-                                }
-                            }
-                            i++;
-                        }
-                    }
-                }
-            } catch (NumberFormatException ex) {
-            }
-        }
-    }
-
-    private void printSelectedCards(Play playable, Play selected) {
-        int i = 0;
-
-        for (CardOwner owner : playable.getCardMap().keySet()) {
-            ui.println(owner.getName());
-            if (owner.cardAmount() == 0) {
-                ui.println("<<empty>>");
-            } else {
-                for (Card card : playable.getCardMap().get(owner)) {
+    private void toggleSelectedCards(List<Card> selection, List<Hand> handList, CardCollection selected) {
+        for (Hand hand : handList) {
+            for (Card card : hand.getCards()) {
+                if (selection.contains(card)) {
                     if (selected.getCards().contains(card)) {
-                        ui.println(">>[" + i + "]<< " + card);
+                        selected.removeCard(hand, card);
                     } else {
-                        ui.println("  [" + i + "]   " + card);
+                        selected.addCardFrom(hand, card);
                     }
-                    i++;
                 }
             }
         }
@@ -189,7 +219,7 @@ public class GameLogicWaffeGame2 extends GameLogic {
     private void dealCardsAfterRound(Player playerInTurn, Pack pack) {
         Hand privateHand = playerInTurn.getHand();
         Hand sharedHand = playerInTurn.getHand(1);
-        while (privateHand.cardAmount() + sharedHand.cardAmount() < 10) {
+        while (privateHand.cardAmount() + sharedHand.cardAmount() < rules.getMaxCardAmount()) {
             if (pack.cardAmount() == 0) {
                 break;
             }
@@ -197,12 +227,17 @@ public class GameLogicWaffeGame2 extends GameLogic {
         }
     }
 
-    private void printPreTurn(Player player) {
-        ui.println(player.getName() + ", it's your turn!"
-                + "\nPack size: " + pack.cardAmount()
-                + "\nPile: " + pile.getType()
-                + "\n" + pile
-                + "\nPress <Enter> to continue");
-        ui.getString();
+    private boolean isAbleToHit(Player player, Pile pile) {
+        return true;
     }
+
+    private void turnPassed(Player player) {
+        ui.println("--- Turn passed ---");
+        pile.clear();
+        Hand privateHand = player.getHand();
+        Hand sharedHand = player.getHand(1);
+        privateHand.transferCards(sharedHand);
+        dealCardsAfterRound(player, pack);
+    }
+
 }

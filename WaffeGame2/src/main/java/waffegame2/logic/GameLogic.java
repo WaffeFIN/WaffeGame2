@@ -15,7 +15,7 @@ import waffegame2.ui.UI;
  *
  * @author Walter
  */
-public abstract class GameLogic implements CardSelector {
+public abstract class GameLogic {
 
     protected UI ui;
     protected List<Player> players;
@@ -24,17 +24,19 @@ public abstract class GameLogic implements CardSelector {
         this.ui = ui;
         this.players = new ArrayList();
     }
-    
-    abstract public int getMaxPlayers();
 
     public void addPlayers(Collection<Player> players) {
         this.players.addAll(players);
     }
 
+    abstract public String getGameName();
+
+    abstract public GameRules getRules();
+
+    abstract public void init();
+
     abstract public void setup();
 
-    abstract public List<Player> checkEndState();
-
-    abstract public int playTurn(Player player);
+    abstract public void playGame();
 
 }

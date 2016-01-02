@@ -5,12 +5,10 @@
  */
 package waffegame2.logic;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import waffegame2.ui.TextBasedUI;
 
 /**
  *
@@ -18,26 +16,18 @@ import static org.junit.Assert.*;
  */
 public class GameLogicWaffeGame2Tests {
 
+    private GameLogic logic;
+
     public GameLogicWaffeGame2Tests() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
     }
 
     @Before
     public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
+        logic = new GameLogicWaffeGame2(new TextBasedUI());
     }
 
     @Test
-    public void hello() {
+    public void getRulesWorks() {
+        assertEquals(GameRulesWaffeGame2.class, logic.getRules().getClass());
     }
 }

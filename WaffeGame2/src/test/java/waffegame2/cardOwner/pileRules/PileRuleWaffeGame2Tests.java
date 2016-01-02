@@ -5,12 +5,14 @@ package waffegame2.cardOwner.pileRules;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import waffegame2.card.*;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import waffegame2.card.Card;
+import waffegame2.card.Suit;
+import waffegame2.card.Value;
 import waffegame2.cardOwner.*;
 
 /**
@@ -19,9 +21,7 @@ import waffegame2.cardOwner.*;
  */
 public class PileRuleWaffeGame2Tests {
 
-    private Pack pack;
     private Pile pile;
-    private Hand hand;
     private List<Card> cards;
 
     public PileRuleWaffeGame2Tests() {
@@ -35,9 +35,7 @@ public class PileRuleWaffeGame2Tests {
 
     @Before
     public void setUp() {
-        pack = new Pack(1, 3);
         pile = new Pile(new PileRuleWaffeGame2());
-        hand = new Hand(10);
         cards = new ArrayList();
         cards.add(new Card(Value.TWO, Suit.DIAMONDS));
         cards.add(new Card(Value.ACE, Suit.DIAMONDS));
