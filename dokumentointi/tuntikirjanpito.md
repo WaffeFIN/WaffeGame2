@@ -139,6 +139,7 @@
 	16
 		Commit ja push
 	17
+<<<<<<< HEAD
 
 
 	23
@@ -180,3 +181,11 @@
 	23
 		Lisää testejä. Commit ja push
 	00
+=======
+	
+	
+	23
+		JavaDoc
+	00
+	
+>>>>>>> 2898924aa0d6a7c3eb8c5f1d72b60827bef3da4b
