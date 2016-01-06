@@ -4,7 +4,7 @@
 	* Käyttämäsi työmäärä ei vaikuta arvosanaan, joten ole rehellinen
 	* Merkitse aina vähintään päivämäärä, käyttämäsi aika ja ajankäytön kohde
 
-17.12.2015
+17.12
 
 	18
 		Tein Git ja GitHub jutut
@@ -12,7 +12,7 @@
 		Tein aihemäärittelyn
 	20
 	
-18.12.2015
+18.12
 
 	19:30
 		Tein perus luokat: Main, Card, Hand, Pack
@@ -24,7 +24,7 @@
 	23
 		Loin Pile luokan, joka on "pelikentän" korttipino. Lisäki muutin CardOwnerin metodeja, muun muuassa addCard:ia.
 
-19.12.2015
+19.12
 
 	00
 		Tein Pile luokalle testit, joiden läpäistessä addCard metodi palauttaa true.
@@ -139,7 +139,6 @@
 	16
 		Commit ja push
 	17
-<<<<<<< HEAD
 
 
 	23
@@ -162,7 +161,6 @@
 		Sain jonkinlaisen systeemin tästä pystyyn.
 	21
 		Pientä testausta ja kokeilua. Voi olla että käytän wait() ja notifyAll() metodeja pysäytääkseen main-threadin
-		Note to self: http://docs.oracle.com/javase/7/docs/technotes/guides/concurrency/threadPrimitiveDeprecation.html
 	22
 	
 6.12
@@ -181,11 +179,3 @@
 	23
 		Lisää testejä. Commit ja push
 	00
-=======
-	
-	
-	23
-		JavaDoc
-	00
-	
->>>>>>> 2898924aa0d6a7c3eb8c5f1d72b60827bef3da4b
