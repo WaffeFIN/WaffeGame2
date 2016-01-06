@@ -22,9 +22,7 @@ public class DummySelector implements CardSelector {
     @Override
     public List<Card> selectCards(Player player, List<Hand> playable) {
         List<Card> cards = new ArrayList();
-        for (Hand hand : playable) {
-            cards.addAll(hand.getCards());
-        }
+        cards.add(playable.get(0).getCards().get(0));
         return cards; //echo
     }
 

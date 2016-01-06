@@ -16,11 +16,9 @@ import waffegame2.ui.UI;
  */
 public interface GameRules {
 
-    public int getPlayers();
+    public int getMinPlayers();
 
-    public int getStartCardAmount();
-
-    public int getMaxCardAmount();
+    public int getMaxPlayers();
 
     public void setAllOptions(UI ui);
 }

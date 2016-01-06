@@ -139,3 +139,44 @@
 	16
 		Commit ja push
 	17
+
+
+	23
+		JavaDoc. Commit ja push
+	00
+	
+4.1
+
+	18:30
+		Mietin miten pelin GUIn tulee toimia. Taidan tehdä niin, että hiirellä saa valittua/siirrettyä kortteja. Lisäksi voi olla nappi joka automaattisesti lajittelee kortit jotenkin loogisesti
+	19
+
+5.1
+
+	18
+		Tein GUI:ta
+	19
+		Ei edistystä... Otan matopeli-tehtävästä (ohjelmoinnin jatkokurssista) esimerkkiä
+	20
+		Sain jonkinlaisen systeemin tästä pystyyn.
+	21
+		Pientä testausta ja kokeilua. Voi olla että käytän wait() ja notifyAll() metodeja pysäytääkseen main-threadin
+		Note to self: http://docs.oracle.com/javase/7/docs/technotes/guides/concurrency/threadPrimitiveDeprecation.html
+	22
+	
+6.12
+
+	14
+		Lisään JavaDocceja ja jatkan GUI:ta
+	15
+		Tein GUI:ta
+	16
+		Loin enumin EventFlag, jonka avulla saadaan tiedot GameWindow:ista GraphicalUI-oliolle.
+	17
+	
+	
+	22
+		Tein pelilogiikan testejä, sekä luokkakaavion päivitys. Sekvenssikaavioita en ehdi tehdä
+	23
+		Lisää testejä. Commit ja push
+	00

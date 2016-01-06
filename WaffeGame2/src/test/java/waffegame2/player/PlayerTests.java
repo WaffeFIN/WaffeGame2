@@ -47,6 +47,6 @@ public class PlayerTests {
 
     @Test
     public void testCardSelection() {
-        assertEquals(5, player.selectCards(player.getHands()).size());
+        assertEquals(1, player.selectCards(player.getHands()).size());
     }
 }

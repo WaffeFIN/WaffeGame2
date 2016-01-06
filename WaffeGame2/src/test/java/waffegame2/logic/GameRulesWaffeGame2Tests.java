@@ -27,7 +27,8 @@ public class GameRulesWaffeGame2Tests {
 
     @Test
     public void testImplementedMethodsDefault() {
-        assertEquals(2, rules.getPlayers());
+        assertEquals(2, rules.getMinPlayers());
+        assertEquals(2, rules.getMaxPlayers());
         assertEquals(10, rules.getStartCardAmount());
         assertEquals(10, rules.getMaxCardAmount());
     }

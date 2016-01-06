@@ -66,7 +66,10 @@ public class Pile extends CardOwner {
     public String getName() {
         return "Pile";
     }
-
+    
+    /**
+     * Sorts the cards from lowest value to highest
+     */
     public void sort() {
         Collections.sort(cards, new CardComparator());
     }

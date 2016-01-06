@@ -53,7 +53,7 @@ public class TextBasedUITests {
         ui.print("this text is here");
         ui.println(", but this text is here too");
         ui.print("this text is on the next row?");
-        ui.showSeparator();
+        ui.showTurnSeparator();
         checkContains("this text is here, but this text is here too", true);
         checkContains("\nthis text is on the next row?", true);
         checkContains("?\n\n", true);
@@ -96,7 +96,7 @@ public class TextBasedUITests {
     @Test
     public void showInstructionsTest() {
         createUIWithInput("");
-        ui.showInstructions("sxckmJBSa");
+        ui.showInstructionsToPlayer("sxckmJBSa");
         checkContains("sxckmJBSa", true);
         checkContains("select ", true);
     }

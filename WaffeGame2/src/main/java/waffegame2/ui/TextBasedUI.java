@@ -18,11 +18,11 @@ import waffegame2.player.Player;
 /**
  * A text based user interface
  *
- * @author      Walter Grönholm
- * @version     1.0
- * @since       2016-01-02
+ * @author Walter Grönholm
+ * @version 1.0
+ * @since 2016-01-02
  */
-public class TextBasedUI implements UI {
+public class TextBasedUI extends UI {
 
     private Scanner sc;
 
@@ -55,7 +55,7 @@ public class TextBasedUI implements UI {
     }
 
     @Override
-    public void showSeparator() {
+    public void showTurnSeparator() {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n----------------------------------------------------------------\n");
     }
 
@@ -79,7 +79,7 @@ public class TextBasedUI implements UI {
     }
 
     @Override
-    public void showInstructions(String name) {
+    public void showInstructionsToPlayer(String name) {
         println(name + ", select cards (enter the numbers corresponding to the cards, separated by a space. E.g. '1 4 5').\nHit the selected cards by entering no numbers");
     }
 
@@ -156,5 +156,15 @@ public class TextBasedUI implements UI {
     @Override
     public void waitForPlayerToContinue() {
         getString();
+    }
+
+    @Override
+    public void run() {
+        return; //:D
+    }
+
+    @Override
+    public boolean showOptionsBox() {
+        return false;
     }
 }

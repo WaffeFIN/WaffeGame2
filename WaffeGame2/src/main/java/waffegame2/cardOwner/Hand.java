@@ -75,6 +75,9 @@ public class Hand extends CardOwner {
         this.acc = acc;
     }
 
+    /**
+     * Sorts the cards from lowest value to highest
+     */
     public void sort() {
         Collections.sort(cards, new CardComparator());
     }

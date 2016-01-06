@@ -10,6 +10,7 @@ import waffegame2.card.Card;
 import java.util.List;
 
 /**
+ * 
  *
  * @author Walter Grönholm
  * @version 1.0

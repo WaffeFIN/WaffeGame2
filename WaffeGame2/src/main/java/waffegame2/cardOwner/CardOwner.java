@@ -26,7 +26,7 @@ public abstract class CardOwner {
     }
 
     /**
-     * Adds the card to the owner
+     * Adds the card to the owner if possible
      *
      * @param card The card to be added
      *
@@ -37,7 +37,7 @@ public abstract class CardOwner {
     }
 
     /**
-     * Adds the cards to the owner
+     * Adds the cards to the owner if possible
      *
      * @param collection The cards to be added
      *

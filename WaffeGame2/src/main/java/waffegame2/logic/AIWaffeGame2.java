@@ -11,8 +11,11 @@ import waffegame2.cardOwner.Hand;
 import waffegame2.player.Player;
 
 /**
+ * The class that does all AI logic for WaffeGame2. Implements CardSelector
  *
- * @author Walter
+ * @author Walter Grönholm
+ * @version 1.0
+ * @since 2016-01-02
  */
 public class AIWaffeGame2 implements CardSelector{
 

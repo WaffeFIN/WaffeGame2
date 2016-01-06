@@ -32,6 +32,26 @@ public class GameLogicWaffeGame2 extends GameLogic {
         this.rules = new GameRulesWaffeGame2();
     }
 
+    //for tests
+    public Pack getPack() {
+        return pack;
+    }
+
+    //for tests
+    public void setPack(Pack pack) {
+        this.pack = pack;
+    }
+
+    //for tests
+    public Pile getPile() {
+        return pile;
+    }
+
+    //for tests
+    public List<Player> getPlayers() {
+        return players;
+    }
+
     @Override
     public String getGameName() {
         return "WaffeGame2";
@@ -112,8 +132,8 @@ public class GameLogicWaffeGame2 extends GameLogic {
 
     @Override
     public void playGame() {
-        setup();
         for (int turn = 0; true;) {
+            ui.showTurnSeparator();
             if (checkEndState()) {
                 break;
             }
@@ -158,12 +178,12 @@ public class GameLogicWaffeGame2 extends GameLogic {
     }
 
     private void playTurn(Player player) {
-        ui.showSeparator();
         while (true) {
             for (Hand hand : player.getHands()) {
                 hand.sort();
             }
             pile.sort();
+            
             CardCollection play = getPlay(player);
             Collection<Card> cardsPlayed = play.getCards();
             if (cardsPlayed.isEmpty()) {
@@ -191,12 +211,11 @@ public class GameLogicWaffeGame2 extends GameLogic {
         ui.waitForPlayerToContinue();
 
         CardCollection selected = new CardCollection();
-        List<Hand> handList = new ArrayList();
-        handList.addAll(player.getHands());
+        List<Hand> handList = new ArrayList(player.getHands());
 
         while (true) {
             ui.showSelectedCards(player, handList, selected);
-            ui.showInstructions(player.getName());
+            ui.showInstructionsToPlayer(player.getName());
             List<Card> selection = player.selectCards(handList);
             if (selection == null) {
                 break;

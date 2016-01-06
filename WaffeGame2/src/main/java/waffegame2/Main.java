@@ -1,6 +1,11 @@
 package waffegame2;
 
+import java.lang.reflect.InvocationTargetException;
+import javax.swing.SwingUtilities;
 import waffegame2.logic.Game;
+import waffegame2.ui.GraphicalUI;
+import waffegame2.ui.TextBasedUI;
+import waffegame2.ui.UI;
 
 /**
  *
@@ -10,9 +15,20 @@ import waffegame2.logic.Game;
  */
 public class Main {
 
-    public static void main(String[] args) {
-        Game game = new Game();
+    public static void main(String[] args) throws InterruptedException, InvocationTargetException {
+        UI ui;
+        boolean graphics = false;
+        
+        if (graphics) {
+            ui = new GraphicalUI();
+        } else {
+            ui = new TextBasedUI();
+        }
+
+        Game game = new Game(ui);
+
+        SwingUtilities.invokeLater(ui);
+        Thread.sleep(1000);
         game.run();
     }
-
 }

@@ -16,16 +16,19 @@ import waffegame2.ui.UI;
  */
 public class GameRulesWaffeGame2 implements GameRules {
 
-    private int players;
     private int startCardsAmount;
     private int maxCardAmount;
+    private int packs;
     private boolean sharedHandsAreEnabled;
     private boolean mustHitIfAbleTo;
+    
+    private static final int minPlayers = 2;
+    private static final int maxPlayers = 2;
 
-    public GameRulesWaffeGame2() {
-        this.players = 2;
+    public GameRulesWaffeGame2() { //DO NOT CHANGE CONSTRUCTOR VALUES
         this.startCardsAmount = 10;
         this.maxCardAmount = 10;
+        this.packs = 1;
         this.sharedHandsAreEnabled = false;
         this.mustHitIfAbleTo = false;
     }
@@ -35,17 +38,10 @@ public class GameRulesWaffeGame2 implements GameRules {
         return; //:D
     }
 
-    @Override
-    public int getPlayers() {
-        return players; //:D
-    }
-
-    @Override
     public int getStartCardAmount() {
         return startCardsAmount; //:D
     }
 
-    @Override
     public int getMaxCardAmount() {
         return maxCardAmount; //:D
     }
@@ -56,6 +52,16 @@ public class GameRulesWaffeGame2 implements GameRules {
 
     public boolean mustHitIfAbleTo() {
         return mustHitIfAbleTo;
+    }
+
+    @Override
+    public int getMinPlayers() {
+        return minPlayers;
+    }
+
+    @Override
+    public int getMaxPlayers() {
+        return maxPlayers;
     }
 
 }

@@ -16,22 +16,17 @@ import waffegame2.ui.UI;
 public class DummyRules implements GameRules {
 
     @Override
-    public int getPlayers() {
-        return 2;
-    }
-
-    @Override
-    public int getStartCardAmount() {
-        return 5;
-    }
-
-    @Override
     public void setAllOptions(UI ui) {
     }
 
     @Override
-    public int getMaxCardAmount() {
-        return 5;
+    public int getMinPlayers() {
+        return 2;
+    }
+
+    @Override
+    public int getMaxPlayers() {
+        return 2;
     }
 
 }

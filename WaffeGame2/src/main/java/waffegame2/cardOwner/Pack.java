@@ -13,9 +13,9 @@ import java.util.Collections;
 /**
  * A CardOwner who can shuffle and create new cards.
  *
- * @author      Walter Grönholm
- * @version     1.0
- * @since       2016-01-02
+ * @author Walter Grönholm
+ * @version 1.0
+ * @since 2016-01-02
  */
 public class Pack extends CardOwner {
 
@@ -35,7 +35,10 @@ public class Pack extends CardOwner {
         createCards();
     }
 
-    public void createCards() {
+    /**
+     * Creates cards and adds them to the pack.
+     */
+    public final void createCards() {
         for (int i = 0; i < packs; i++) {
             for (int j = 0; j < jokers; j++) {
                 addCard(new Card(Value.JOKER, Suit.JOKER));

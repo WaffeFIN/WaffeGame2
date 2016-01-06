@@ -1,3 +1,4 @@
 # WaffeGame2
 Walterin Javalabran projekti
-jotakin
+
+Katso tiedot dokumentointi/aihemaarittely.md - tiedostosta

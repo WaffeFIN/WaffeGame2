@@ -16,17 +16,14 @@ import waffegame2.ui.*;
  * @version 1.0
  * @since 2016-01-02
  */
-public class Game {
+public class Game implements Runnable {
 
     private UI ui;
-    private List<Player> players;
     private GameRules rules;
     private GameLogic logic;
 
-    public Game() {
-        this.ui = new TextBasedUI();
-        this.players = new ArrayList();
-        setGamelogic(new GameLogicWaffeGame2(ui));
+    public Game(UI ui) {
+        this.ui = ui;
     }
 
     public void setGamelogic(GameLogic logic) {
@@ -34,47 +31,20 @@ public class Game {
         this.rules = logic.getRules();
     }
 
+    @Override
     public void run() {
+        ui.println("Welcome to WaffeGame2!");
+        setGamelogic(new GameLogicWaffeGame2(ui));
+
         rules.setAllOptions(ui);
 
-        addPlayers();
+        logic.addPlayers(ui.getPlayers(rules.getMinPlayers(), rules.getMaxPlayers()));
         logic.init();
 
         while (true) {
+            logic.setup();
             logic.playGame();
+            break;
         }
-    }
-
-    private void addPlayers() {
-        for (int i = 0; i < rules.getPlayers(); i++) {
-            ui.println("Player " + (i + 1) + ", please enter your name:");
-            addPlayer();
-        }
-
-        logic.addPlayers(players);
-    }
-
-    private void addPlayer() {
-        while (true) {
-            String input = ui.getString();
-            if (input != null && input.length() > 0) {
-                if (hasPlayer(input)) {
-                    ui.println("The names should be unique to avoid confusion. Please enter a new name:");
-                } else {
-                    Player p = new Player(input, ui);
-                    players.add(p);
-                    break;
-                }
-            }
-        }
-    }
-
-    public boolean hasPlayer(String name) {
-        for (Player player : players) {
-            if (player.getName().equals(name)) {
-                return true;
-            }
-        }
-        return false;
     }
 }

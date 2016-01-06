@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package waffegame2.cardOwner.pileRules;
 
 import waffegame2.cardOwner.PileType;
@@ -12,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * The logic of the pile for WaffeGame2. Implements PileRule
  *
  * @author Walter Grönholm
  * @version 1.0
@@ -65,9 +61,6 @@ public class PileRuleWaffeGame2 implements PileRule {
             return false;
         }
         List<Card> list = getNonJokerCardsSorted();
-        if (list.isEmpty()) {
-            return true;
-        }
 
         for (int startIndex = 0; startIndex < list.size(); startIndex++) {
             switch (checkStraightFrom(list, startIndex)) {
@@ -123,11 +116,7 @@ public class PileRuleWaffeGame2 implements PileRule {
         if (cards.size() % groupSize != 0) {
             return false;
         }
-
         List<Card> list = getNonJokerCardsSorted();
-        if (list.isEmpty()) {
-            return true;
-        }
 
         int jokers = countJokers();
         int missing = 0;
