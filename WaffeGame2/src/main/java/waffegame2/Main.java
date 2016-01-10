@@ -17,7 +17,7 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException, InvocationTargetException {
         UI ui;
-        boolean graphics = false;
+        boolean graphics = true;
         
         if (graphics) {
             ui = new GraphicalUI();

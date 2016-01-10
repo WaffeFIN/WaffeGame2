@@ -26,6 +26,7 @@ public class GraphicalUI extends UI {
     private volatile EventFlag state;
     private String bufferString;
     private Card bufferCard;
+    private EventFlag bufferFlag;
     private GameWindow gameWindow;
 
     @Override
@@ -34,26 +35,25 @@ public class GraphicalUI extends UI {
         gameWindow.setVisible(true);
     }
 
-    @Override
-    public String getString() {
-        pauseThread(EventFlag.CHAT_STRING);
-        return bufferString;
+    public synchronized void recieveAction(EventFlag flag, Object o) {
+        recieveAction(flag, null, o);
     }
 
-    public synchronized void recieveAction(EventFlag flag, Object o) {
+    public synchronized void recieveAction(EventFlag flag, EventFlag bufferFlag, Object o) {
         if (flag == state) {
             try {
                 switch (flag) {
                     case CHAT_STRING:
                         bufferString = (String) o;
                         break;
-                    case CARD_BUTTON:
+                    case SELECTION_BUTTONS:
                         bufferCard = (Card) o;
                         break;
                 }
+                this.bufferFlag = bufferFlag;
                 continueThread();
             } catch (ClassCastException ex) {
-                print("ClassCastException for flag '" + flag + "' and object '" + o + "'");
+                printlnBoth("ClassCastException for flags '" + flag + "', and '" + bufferFlag + "' and object '" + o + "'");
             }
         }
     }
@@ -86,9 +86,16 @@ public class GraphicalUI extends UI {
     }
 
     @Override
-    public void waitForPlayerToContinue() {
-        //show continue button
+    public String getString() {
+        pauseThread(EventFlag.CHAT_STRING);
+        return bufferString;
+    }
+
+    @Override
+    public void waitToContinue() {
+        gameWindow.showContinueButton();
         pauseThread(EventFlag.PRETURN_CONTINUE_BUTTON);//swap String with JButton
+        gameWindow.hideContinueButton();
     }
 
     @Override
@@ -101,58 +108,89 @@ public class GraphicalUI extends UI {
         gameWindow.println(text);
     }
 
+    private void printlnBoth(String text) {
+        gameWindow.printlnBoth(text);
+    }
+
     @Override
     public void showTurnSeparator() {
-        return; //hide all cards
+        gameWindow.hideCardSprites();
     }
 
     @Override
-    public void showInstructionsToPlayer(String name) {
-        println(name + ", select cards you want to play.\nHit the selected cards by clicking the");
+    public void showInstructionsToPlayer(Player player) {
+        println(player.getName() + ", select cards you want to play.\nHit the selected cards by clicking the 'Hit' button");
     }
 
     @Override
-    public void showWinner(String name) {
-        return; //
+    public void showWinner(Player player) {
+        gameWindow.showWinner(player);
+        pauseThread(EventFlag.RESTART_BUTTON);
+        gameWindow.hideWinnerWindow();
     }
 
     @Override
-    public void showWinners(List<String> names) {
-        return; //
+    public void showWinners(List<Player> players) {
+        gameWindow.showWinners(players);
+        pauseThread(EventFlag.RESTART_BUTTON);
+        gameWindow.hideWinnerWindow();
     }
 
     @Override
     public void showSelectedCards(Player player, List<Hand> playable, CardCollection selected) {
-        return; //
+        gameWindow.showSelectedCards(player, playable, selected);
     }
 
     @Override
-    public void showPreTurn(String str) {
-        return; //:D
+    public void beforeTurn(Player player, String str) {
+        gameWindow.println(str);
+        gameWindow.preTurn(player);
+    }
+
+    @Override
+    public void inTurn() {
+        gameWindow.showSelectorButtons();
+    }
+
+    @Override
+    public void afterTurn() {
+        gameWindow.hideSelectorButtons();
     }
 
     @Override
     public void setPack(Pack pack) {
-        return; //:D
+        gameWindow.setPack(pack);
     }
 
     @Override
     public void setPile(Pile pile) {
-        return; //:D
+        gameWindow.setPile(pile);
     }
 
     @Override
     public List<Card> selectCards(Player player, List<Hand> playable) {
         List<Card> card = new ArrayList();
-        pauseThread(EventFlag.CARD_BUTTON);
-        card.add(bufferCard);
-        return card;
+        pauseThread(EventFlag.SELECTION_BUTTONS);
+        switch (bufferFlag) {
+            case CARD_BUTTON:
+                card.add(bufferCard);
+                return card;
+            case HIT_BUTTON:
+                return card;
+            case PASS_BUTTON:
+                return null;
+            default:
+                printlnBoth("Odd bufferFlag @selectCards: " + bufferFlag);
+                return null;
+        }
     }
 
     @Override
     public boolean showOptionsBox() {
-        //create and show OptionsBox
-        pauseThread(EventFlag.OPTIONS_CONTINUE_BUTTON);
+//        gameWindow.showOptionWindow();
+//        pauseThread(EventFlag.OPTIONS_CONTINUE_BUTTON);
+//        gameWindow.hideOptionWindow();
         return true;
     }
+
 }

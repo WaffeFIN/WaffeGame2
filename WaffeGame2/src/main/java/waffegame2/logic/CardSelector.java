@@ -19,5 +19,7 @@ import waffegame2.player.Player;
  */
 public interface CardSelector {
 
+    public void waitToContinue();
+
     public List<Card> selectCards(Player player, List<Hand> playable);
 }

@@ -6,7 +6,18 @@
 package waffegame2.ui;
 
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import waffegame2.card.Card;
+import waffegame2.cardOwner.CardCollection;
+import waffegame2.cardOwner.Hand;
+import waffegame2.cardOwner.HandAccessibility;
+import waffegame2.cardOwner.Pack;
+import waffegame2.cardOwner.Pile;
+import waffegame2.player.Player;
+import static waffegame2.util.Util.canSeeCards;
+import static waffegame2.util.Util.canUseCards;
 
 /**
  * The game window. Extends JFrame
@@ -20,11 +31,17 @@ public class GameWindow extends javax.swing.JFrame {
     /**
      * Creates new form GraphicalUI
      */
-    GraphicalUI ui;
+    private Pile pile;
+    private Pack pack;
+    private Map<Card, CardSprite> cardSpriteMap;
+    private GraphicalUI ui;
 
     public GameWindow(GraphicalUI ui) {
         this.ui = ui;
+        this.cardSpriteMap = new HashMap();
         initComponents();
+        hideContinueButton();
+        hideSelectorButtons();
     }
 
     /**
@@ -37,6 +54,13 @@ public class GameWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanelGame = new javax.swing.JPanel();
+        MainWindow = new javax.swing.JLayeredPane();
+        ContinueSubwindow = new javax.swing.JPanel();
+        CSWLabel = new javax.swing.JLabel();
+        CSWButton = new javax.swing.JButton();
+        SelectorSubWindow = new javax.swing.JPanel();
+        SSWHit = new javax.swing.JButton();
+        SSWPass = new javax.swing.JButton();
         jPanelSide = new javax.swing.JPanel();
         jScrollPanePlayers = new javax.swing.JScrollPane();
         jListPlayerList = new javax.swing.JList();
@@ -52,7 +76,105 @@ public class GameWindow extends javax.swing.JFrame {
         jPanelGame.setBackground(new java.awt.Color(255, 255, 255));
         jPanelGame.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanelGame.setPreferredSize(new java.awt.Dimension(800, 350));
-        jPanelGame.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        ContinueSubwindow.setToolTipText("");
+        ContinueSubwindow.setEnabled(false);
+
+        CSWLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        CSWLabel.setText("Click here to continue");
+
+        CSWButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        CSWButton.setText("OK");
+        CSWButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CSWButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout ContinueSubwindowLayout = new javax.swing.GroupLayout(ContinueSubwindow);
+        ContinueSubwindow.setLayout(ContinueSubwindowLayout);
+        ContinueSubwindowLayout.setHorizontalGroup(
+            ContinueSubwindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ContinueSubwindowLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(ContinueSubwindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(CSWButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(CSWLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        ContinueSubwindowLayout.setVerticalGroup(
+            ContinueSubwindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ContinueSubwindowLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(CSWLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(CSWButton, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        SelectorSubWindow.setEnabled(false);
+
+        SSWHit.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        SSWHit.setText("HIT");
+        SSWHit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SSWHitActionPerformed(evt);
+            }
+        });
+
+        SSWPass.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        SSWPass.setText("PASS");
+        SSWPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SSWPassActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout SelectorSubWindowLayout = new javax.swing.GroupLayout(SelectorSubWindow);
+        SelectorSubWindow.setLayout(SelectorSubWindowLayout);
+        SelectorSubWindowLayout.setHorizontalGroup(
+            SelectorSubWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SelectorSubWindowLayout.createSequentialGroup()
+                .addGap(3, 3, 3)
+                .addGroup(SelectorSubWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(SSWHit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(SSWPass, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE))
+                .addGap(3, 3, 3))
+        );
+        SelectorSubWindowLayout.setVerticalGroup(
+            SelectorSubWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SelectorSubWindowLayout.createSequentialGroup()
+                .addGap(3, 3, 3)
+                .addComponent(SSWHit, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
+                .addComponent(SSWPass, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3))
+        );
+
+        javax.swing.GroupLayout MainWindowLayout = new javax.swing.GroupLayout(MainWindow);
+        MainWindow.setLayout(MainWindowLayout);
+        MainWindowLayout.setHorizontalGroup(
+            MainWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(MainWindowLayout.createSequentialGroup()
+                .addComponent(SelectorSubWindow, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainWindowLayout.createSequentialGroup()
+                .addContainerGap(287, Short.MAX_VALUE)
+                .addComponent(ContinueSubwindow, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(283, 283, 283))
+        );
+        MainWindowLayout.setVerticalGroup(
+            MainWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MainWindowLayout.createSequentialGroup()
+                .addComponent(SelectorSubWindow, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ContinueSubwindow, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(77, Short.MAX_VALUE))
+        );
+        MainWindow.setLayer(ContinueSubwindow, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        MainWindow.setLayer(SelectorSubWindow, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jPanelGame.add(MainWindow);
 
         jPanelSide.setBackground(new java.awt.Color(255, 255, 255));
         jPanelSide.setBorder(javax.swing.BorderFactory.createTitledBorder("Players"));
@@ -92,9 +214,9 @@ public class GameWindow extends javax.swing.JFrame {
         jScrollPaneOutput.setViewportView(jTextAreaOutput);
 
         jButtonSubmit.setText("Submit");
-        jButtonSubmit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButtonSubmitMouseClicked(evt);
+        jButtonSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSubmitActionPerformed(evt);
             }
         });
 
@@ -141,13 +263,6 @@ public class GameWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonSubmitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSubmitMouseClicked
-        switch (evt.getButton()) {
-            case MouseEvent.BUTTON1:
-                submitLine();
-        }
-    }//GEN-LAST:event_jButtonSubmitMouseClicked
-
     private void jTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldKeyPressed
         if (jTextField.isFocusOwner()) {
             switch (evt.getKeyCode()) {
@@ -157,11 +272,35 @@ public class GameWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextFieldKeyPressed
 
+    private void CSWButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CSWButtonActionPerformed
+        ui.recieveAction(EventFlag.PRETURN_CONTINUE_BUTTON, null);
+    }//GEN-LAST:event_CSWButtonActionPerformed
+
+    private void SSWHitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SSWHitActionPerformed
+        //can't hit if no selections!
+        ui.recieveAction(EventFlag.SELECTION_BUTTONS, EventFlag.HIT_BUTTON, null);
+    }//GEN-LAST:event_SSWHitActionPerformed
+
+    private void SSWPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SSWPassActionPerformed
+        ui.recieveAction(EventFlag.SELECTION_BUTTONS, EventFlag.PASS_BUTTON, null);
+    }//GEN-LAST:event_SSWPassActionPerformed
+
+    private void jButtonSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSubmitActionPerformed
+        submitLine();
+    }//GEN-LAST:event_jButtonSubmitActionPerformed
+
     private void submitLine() {
         String input = jTextField.getText();
-        println(input);
-        jTextField.setText("");
+        if (input.length() > 0) {
+            println(input);
+            jTextField.setText("");
+        }
         ui.recieveAction(EventFlag.CHAT_STRING, input);
+    }
+
+    public void printlnBoth(String text) {
+        println(text);
+        System.out.println(text);
     }
 
     public void println(String text) {
@@ -176,11 +315,201 @@ public class GameWindow extends javax.swing.JFrame {
         }
     }
 
+    //
+    public void showOptionWindow() {
+    }
+
+    public void hideOptionWindow() {
+    }
+
+    public void setPack(Pack pack) {
+        this.pack = pack;
+    }
+
+    public void setPile(Pile pile) {
+        this.pile = pile;
+    }
+
+    private CardSprite createCardGraphics(Card card) {
+        CardSprite sprite = new CardSprite(card, 0, 0);
+        sprite.setVisible(true);
+        this.cardSpriteMap.put(card, sprite);
+        MainWindow.add(sprite);//<----------------------------------------------
+        return sprite;
+    }
+
+    private void createCardSprites(List<Card> cards) {
+        for (Card card : cards) {
+            createCardGraphics(card);
+        }
+    }
+
+    public void hideCardSprites() { //turnseparator
+        for (CardSprite sprite : cardSpriteMap.values()) {
+            sprite.setFaceUp(false);
+        }
+    }
+
+    private CardSprite getOrCreateSprite(Card card) {
+        if (cardSpriteMap.containsKey(card)) {
+            return cardSpriteMap.get(card);
+        } else {
+            return createCardGraphics(card);
+        }
+
+    }
+
+    public void showVisibleCardSprites(Player player, List<Hand> playable) {
+        for (Hand hand : playable) {
+            setSpritesFaceUp(hand.getCards(), canSeeCards(player, hand));
+        }
+    }
+
+    private void setSpritesFaceUp(List<Card> cards, boolean b) {
+        for (Card card : cards) {
+            getOrCreateSprite(card).setFaceUp(b);
+        }
+    }
+
+    public void enablePlayableCardSprites(Player player, List<Hand> playable) {
+        for (Hand hand : playable) {
+            setSpritesEnabled(hand.getCards(), canUseCards(player, hand));
+        }
+    }
+
+    private void setSpritesEnabled(List<Card> cards, boolean b) {
+        for (Card card : cards) {
+            getOrCreateSprite(card).setEnabled(b);
+        }
+    }
+
+    public void showSelectedCardSprites(Player player, List<Hand> playable, CardCollection selected) {
+        for (Hand hand : playable) {
+            for (Card card : hand.getCards()) {
+                getOrCreateSprite(card).selectCard(selected.contains(card));
+            }
+        }
+    }
+
+    public void showContinueButton() {
+        ContinueSubwindow.setEnabled(true);
+        CSWButton.setEnabled(true);
+        ContinueSubwindow.setVisible(true);
+        CSWButton.setVisible(true);
+    }
+
+    public void hideContinueButton() {
+        ContinueSubwindow.setEnabled(false);
+        CSWButton.setEnabled(false);
+        ContinueSubwindow.setVisible(false);
+        CSWButton.setVisible(false);
+    }
+
+    public void showSelectorButtons() {
+        SelectorSubWindow.setEnabled(true);
+        SSWHit.setEnabled(true);
+        SSWPass.setEnabled(true);
+        SelectorSubWindow.setVisible(true);
+        SSWHit.setVisible(true);
+        SSWPass.setVisible(true);
+    }
+
+    public void hideSelectorButtons() {
+        SelectorSubWindow.setEnabled(false);
+        SSWHit.setEnabled(false);
+        SSWPass.setEnabled(false);
+        SelectorSubWindow.setVisible(false);
+        SSWHit.setVisible(false);
+        SSWPass.setVisible(false);
+    }
+
+    public void preTurn(Player player) {
+        //highlight player hands on screen, DO NOT SHOW CARDS
+    }
+
+    public void showSelectedCards(Player player, List<Hand> playable, CardCollection selected) {
+        showVisibleCardSprites(player, playable);
+        showSelectedCardSprites(player, playable, selected);
+        enablePlayableCardSprites(player, playable);
+
+        moveAllPlayableCardSprites(player, playable, selected);
+    }
+
+    private void moveAllPlayableCardSprites(Player player, List<Hand> playable, CardCollection selected) {
+        //cardSpriteMap
+        int row = 0;
+        row = movePlayerPrivateHands(player, playable, selected, row);
+        row = movePlayerOtherHands(player, playable, selected, row);
+        moveAllOtherHands(player, playable, selected, row);
+
+    }
+
+    private void moveSpritesToRow(List<Card> cards, int row) {
+        int i = (10 - cards.size()) / 2;
+        for (Card card : cards) {
+            CardSprite sprite = getOrCreateSprite(card);
+            sprite.setLocation(200 + i * 27, 10 + row * 100);
+            i += 2;
+        }
+    }
+
+    private int movePlayerPrivateHands(Player player, List<Hand> playable, CardCollection selected, int row) {
+        for (Hand hand : playable) {
+            if (hand.getPlayer() == player) {
+                if (hand.getAccessibility() == HandAccessibility.PRIVATE) {
+                    moveSpritesToRow(hand.getCards(), row);
+                    row++;
+                }
+            }
+        }
+        return row;
+    }
+
+    private int movePlayerOtherHands(Player player, List<Hand> playable, CardCollection selected, int row) {
+        for (Hand hand : playable) {
+            if (hand.getPlayer() == player) {
+                if (hand.getAccessibility() != HandAccessibility.PRIVATE) {
+                    moveSpritesToRow(hand.getCards(), row);
+                    row++;
+                }
+            }
+        }
+        return row;
+    }
+
+    private int moveAllOtherHands(Player player, List<Hand> playable, CardCollection selected, int row) {
+        for (Hand hand : playable) {
+            if (hand.getPlayer() != player) {
+                moveSpritesToRow(hand.getCards(), row);
+                row++;
+            }
+        }
+        return row;
+    }
+
+    public void showWinner(Player player) {
+
+    }
+
+    public void showWinners(List<Player> players) {
+
+    }
+
+    public void hideWinnerWindow() {
+        return; //:D
+    }
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton CSWButton;
+    private javax.swing.JLabel CSWLabel;
+    private javax.swing.JPanel ContinueSubwindow;
+    private javax.swing.JLayeredPane MainWindow;
+    private javax.swing.JButton SSWHit;
+    private javax.swing.JButton SSWPass;
+    private javax.swing.JPanel SelectorSubWindow;
     private javax.swing.JButton jButtonSubmit;
     private javax.swing.JList jListPlayerList;
     private javax.swing.JPanel jPanelGame;

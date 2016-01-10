@@ -160,6 +160,15 @@ public class CardCollection {
         return false;
     }
 
+    public boolean contains(Card card) {
+        for (List<Card> list : cardMap.values()) {
+            if (list.contains(card)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public int cardAmount() {
         return getCards().size();
     }

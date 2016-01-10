@@ -67,6 +67,10 @@ public class Player {
         return selector.selectCards(this, playable);
     }
 
+    public void waitToContinue() {
+        selector.waitToContinue();
+    }
+
     @Override
     public String toString() {
         return getName();

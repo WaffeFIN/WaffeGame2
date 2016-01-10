@@ -23,5 +23,10 @@ public class AIWaffeGame2 implements CardSelector{
     public List<Card> selectCards(Player player, List<Hand> playable) {
         return null; //:D
     }
+
+    @Override
+    public void waitToContinue() {
+        return; //:D
+    }
     
 }

@@ -19,6 +19,7 @@ import waffegame2.card.Suit;
 import waffegame2.card.Value;
 import waffegame2.cardOwner.CardCollection;
 import waffegame2.cardOwner.Hand;
+import waffegame2.logic.DummySelector;
 import waffegame2.player.Player;
 
 /**
@@ -67,27 +68,21 @@ public class TextBasedUITests {
     }
 
     @Test
-    public void testSkip() {
-        createUIWithInput("\n");
-        ui.waitForPlayerToContinue();
-        assertTrue(true);
-    }
-
-    @Test
     public void showWinnerTest() {
         createUIWithInput("");
-        ui.showWinner("Wafafel");
+        Player p = new Player("Wafafel", new DummySelector());
+        ui.showWinner(p);
         checkContains("Wafafel ", true);
     }
 
     @Test
     public void showWinnersTest() {
         createUIWithInput("");
-        List<String> names = new ArrayList();
-        names.add("xD");
-        names.add("zÖll");
-        names.add("asdxadas");
-        ui.showWinners(names);
+        List<Player> players = new ArrayList();
+        players.add(new Player("xD", new DummySelector()));
+        players.add(new Player("zÖll", new DummySelector()));
+        players.add(new Player("asdxadas", new DummySelector()));
+        ui.showWinners(players);
         checkContains("xD", true);
         checkContains("zÖll", true);
         checkContains("asdxadas", true);
@@ -96,7 +91,8 @@ public class TextBasedUITests {
     @Test
     public void showInstructionsTest() {
         createUIWithInput("");
-        ui.showInstructionsToPlayer("sxckmJBSa");
+        Player p = new Player("sxckmJBSa", new DummySelector());
+        ui.showInstructionsToPlayer(p);
         checkContains("sxckmJBSa", true);
         checkContains("select ", true);
     }
@@ -104,7 +100,8 @@ public class TextBasedUITests {
     @Test
     public void showPreTurnTest() {
         createUIWithInput("");
-        ui.showPreTurn("testOutputxashjdvkasd");
+        Player player = new Player("Name", ui);
+        ui.beforeTurn(player, "testOutputxashjdvkasd");
         checkContains("testOutputxashjdvkasd", true);
     }
 
@@ -117,7 +114,7 @@ public class TextBasedUITests {
 
         List<Card> cards = ui.selectCards(player, player.getHands());
         assertEquals(3, cards.size());
-        assertEquals(Suit.CLUBS,cards.get(0).getSuit());
+        assertEquals(Suit.CLUBS, cards.get(0).getSuit());
     }
 
     @Test
@@ -127,7 +124,7 @@ public class TextBasedUITests {
         Player player = new Player("Name", ui);
         setupPlayer(player);
 
-        assertEquals(null, ui.selectCards(player, player.getHands()));
+        assertTrue(ui.selectCards(player, player.getHands()).isEmpty());
     }
 
     @Test
@@ -136,15 +133,15 @@ public class TextBasedUITests {
 
         Player player = new Player("Name", ui);
         setupPlayer(player);
-        
+
         CardCollection selected = new CardCollection();
         selected.addCardsFrom(player.getHand(), player.getHand().getCards());
 
         ui.showSelectedCards(player, player.getHands(), selected);
-        
-        checkContains(">[0]<",true);
-        checkContains(">[1]<",true);
-        checkContains(">[2]<",true);
+
+        checkContains(">[0]<", true);
+        checkContains(">[1]<", true);
+        checkContains(">[2]<", true);
     }
 
     private void setupPlayer(Player player) {

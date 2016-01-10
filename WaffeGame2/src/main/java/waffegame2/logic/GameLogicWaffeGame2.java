@@ -147,13 +147,9 @@ public class GameLogicWaffeGame2 extends GameLogic {
         List<Player> winners = getWinners();
         if (!winners.isEmpty()) {
             if (winners.size() == 1) {
-                ui.showWinner(winners.get(0).getName());
+                ui.showWinner(winners.get(0));
             } else {
-                List<String> winnersNames = new ArrayList();
-                for (Player winner : winners) {
-                    winnersNames.add(winner.getName());
-                }
-                ui.showWinners(winnersNames);
+                ui.showWinners(winners);
             }
             return true;
         }
@@ -178,12 +174,18 @@ public class GameLogicWaffeGame2 extends GameLogic {
     }
 
     private void playTurn(Player player) {
+        ui.beforeTurn(player, player.getName() + ", it's your turn!"
+                + "\nPack size: " + pack.cardAmount()
+                + "\nPile: " + pile.getType()
+                + "\n" + pile);
+        player.waitToContinue();
         while (true) {
+            ui.inTurn();
             for (Hand hand : player.getHands()) {
                 hand.sort();
             }
             pile.sort();
-            
+
             CardCollection play = getPlay(player);
             Collection<Card> cardsPlayed = play.getCards();
             if (cardsPlayed.isEmpty()) {
@@ -199,25 +201,22 @@ public class GameLogicWaffeGame2 extends GameLogic {
             }
             ui.println("--- Invalid selection! You cannot hit the cards you selected! ---");
         }
+        ui.afterTurn();
     }
 
     private CardCollection getPlay(Player player) {
-
-        ui.showPreTurn(player.getName() + ", it's your turn!"
-                + "\nPack size: " + pack.cardAmount()
-                + "\nPile: " + pile.getType()
-                + "\n" + pile
-                + "\nPress <Enter> to continue");
-        ui.waitForPlayerToContinue();
 
         CardCollection selected = new CardCollection();
         List<Hand> handList = new ArrayList(player.getHands());
 
         while (true) {
             ui.showSelectedCards(player, handList, selected);
-            ui.showInstructionsToPlayer(player.getName());
+            ui.showInstructionsToPlayer(player);
             List<Card> selection = player.selectCards(handList);
-            if (selection == null) {
+            if (selection == null) { //pass
+                return new CardCollection();
+            }
+            if (selection.isEmpty()) { //hit
                 break;
             }
             toggleSelectedCards(selection, handList, selected);

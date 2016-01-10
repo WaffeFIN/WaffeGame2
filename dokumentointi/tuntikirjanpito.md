@@ -130,7 +130,7 @@
 		Sitä samaa. Ohjelman testausta. Keskityn tämän jälkeen GUIn tekemiseen.
 	22
 	
-2.1.2016
+2.1
 	
 	14
 		Korjaan luokkakaaviot yms.
@@ -163,7 +163,7 @@
 		Pientä testausta ja kokeilua. Voi olla että käytän wait() ja notifyAll() metodeja pysäytääkseen main-threadin
 	22
 	
-6.12
+6.1
 
 	14
 		Lisään JavaDocceja ja jatkan GUI:ta
@@ -179,3 +179,30 @@
 	23
 		Lisää testejä. Commit ja push
 	00
+	
+9.1
+
+	20
+		Jatkan GUIn tekemistä, loin tarvittavia metodeja. Loin CardSprite olion
+	21
+		Sitä samaa. 
+	22
+		GUI juttuja. Tein pieniä muokkauksia pelilogiikkaan GUIta varten
+	23
+		Korjasin pari pelilogiikan bugia. 
+	23:30
+	
+10.10
+
+	0:30
+		Tein kuvia korteille
+	01
+		-"-
+	02
+		Tein lisää GUI juttuja, mm. kuvien importtaus ja korttien asettelu
+	03
+		-"-
+	03:30
+	
+
+	

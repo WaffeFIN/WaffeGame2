@@ -21,12 +21,13 @@ import org.junit.runners.Suite;
     waffegame2.cardOwner.PileTypeTests.class,
     waffegame2.cardOwner.CardCollectionTests.class,
     waffegame2.cardOwner.HandAccessibilityTests.class,
+    waffegame2.cardOwner.pileRules.PileRuleWaffeGame2Tests.class,
     waffegame2.logic.GameLogicWaffeGame2Tests.class,
     waffegame2.logic.GameRulesWaffeGame2Tests.class,
     waffegame2.logic.GameTests.class,
     waffegame2.player.PlayerTests.class,
-    waffegame2.ui.TextBasedUITests.class
-
+    waffegame2.ui.TextBasedUITests.class,
+    waffegame2.util.UtilTests.class
 })
 public class TestSuite {
 

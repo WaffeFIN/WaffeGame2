@@ -26,8 +26,6 @@ public abstract class UI implements CardSelector, Runnable {
     //Essential
     abstract public String getString();
 
-    abstract public void waitForPlayerToContinue();
-
     //Extra
     abstract public void print(String text);
 
@@ -35,21 +33,25 @@ public abstract class UI implements CardSelector, Runnable {
 
     abstract public void showTurnSeparator(); //TextUIOnly 
 
-    abstract public void showInstructionsToPlayer(String name);
+    abstract public void showInstructionsToPlayer(Player player);
 
-    abstract public void showWinner(String name);
+    abstract public void showWinner(Player player);
 
-    abstract public void showWinners(List<String> names);
+    abstract public void showWinners(List<Player> players);
 
     abstract public void showSelectedCards(Player player, List<Hand> playable, CardCollection selected);
 
-    abstract public void showPreTurn(String str);
+    abstract public void beforeTurn(Player p, String str);
+
+    abstract public void inTurn();
+
+    abstract public void afterTurn();
 
     //GUI stuff below
     abstract public void setPack(Pack pack);
 
     abstract public void setPile(Pile pile);
-    
+
     abstract public boolean showOptionsBox();
 
     public List<Player> addPlayers(int playerAmount) {

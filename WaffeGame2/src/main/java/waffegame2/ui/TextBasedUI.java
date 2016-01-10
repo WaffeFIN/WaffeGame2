@@ -14,6 +14,9 @@ import waffegame2.cardOwner.Pile;
 import waffegame2.cardOwner.CardCollection;
 import waffegame2.cardOwner.Hand;
 import waffegame2.player.Player;
+import waffegame2.util.Util;
+import static waffegame2.util.Util.canSeeCards;
+import static waffegame2.util.Util.canUseCards;
 
 /**
  * A text based user interface
@@ -65,31 +68,28 @@ public class TextBasedUI extends UI {
     }
 
     @Override
-    public void showWinner(String name) {
-        println(name + " is the Winner!\n");
+    public void showWinner(Player player) {
+        println(player.getName() + " is the Winner!\n");
     }
 
     @Override
-    public void showWinners(List<String> names) {
+    public void showWinners(List<Player> players) {
         String str = "";
-        for (int i = 0; i < names.size() - 1; i++) {
-            str += names.get(i) + ", ";
+        for (int i = 0; i < players.size() - 1; i++) {
+            str += players.get(i).getName() + ", ";
         }
-        println(str + names.get(names.size() - 1) + " are the Winners!\n");
+        println(str + players.get(players.size() - 1) + " are the Winners!\n");
     }
 
     @Override
-    public void showInstructionsToPlayer(String name) {
-        println(name + ", select cards (enter the numbers corresponding to the cards, separated by a space. E.g. '1 4 5').\nHit the selected cards by entering no numbers");
+    public void showInstructionsToPlayer(Player player) {
+        println(player.getName() + ", select cards (enter the numbers corresponding to the cards, separated by a space. E.g. '1 4 5').\nHit the selected cards by entering no numbers");
     }
 
     @Override
     public List<Card> selectCards(Player player, List<Hand> playable) {
-        String cmd = getString();
-        if (cmd.equals("")) {
-            return null;
-        }
-        return (getSelection(cmd.split(" "), player, playable));
+        String input = getString();
+        return (getSelection(input.split(" "), player, playable));
     }
 
     private List<Card> getSelection(String[] selections, Player player, List<Hand> playable) {
@@ -98,11 +98,13 @@ public class TextBasedUI extends UI {
             try {
                 int n = Integer.parseInt(str);
                 int i = 0;
+                handLoop:
                 for (Hand hand : playable) {
                     if (canSeeCards(player, hand) && canUseCards(player, hand)) {
                         for (Card card : hand.getCards()) {
                             if (i == n) {
                                 selection.add(card);
+                                break handLoop;
                             }
                             i++;
                         }
@@ -112,14 +114,6 @@ public class TextBasedUI extends UI {
             }
         }
         return selection;
-    }
-
-    private boolean canUseCards(Player player, Hand hand) {
-        return (hand.getAccessibility().isUsableByAnyone() || (hand.getPlayer() == player && hand.getAccessibility().isUsableByOwner()));
-    }
-
-    private boolean canSeeCards(Player player, Hand hand) {
-        return (hand.getAccessibility().isVisibleToEveryone() || (hand.getPlayer() == player && hand.getAccessibility().isVisibleToOwner()));
     }
 
     @Override
@@ -149,22 +143,31 @@ public class TextBasedUI extends UI {
     }
 
     @Override
-    public void showPreTurn(String str) {
-        println(str);
+    public void beforeTurn(Player player, String str) {
+        println(str + "\nPress <Enter> to continue");
     }
 
     @Override
-    public void waitForPlayerToContinue() {
+    public void inTurn() {
+    }
+
+    @Override
+    public void afterTurn() {
+        return; //:D
+    }
+
+    @Override
+    public void waitToContinue() {
         getString();
     }
 
     @Override
     public void run() {
-        return; //:D
     }
 
     @Override
     public boolean showOptionsBox() {
         return false;
     }
+
 }

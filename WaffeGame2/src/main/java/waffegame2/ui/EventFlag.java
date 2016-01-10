@@ -10,21 +10,31 @@ package waffegame2.ui;
  * @author Walter
  */
 public enum EventFlag {
-    RUNNING, OPTIONS_CONTINUE_BUTTON, CHAT_STRING, PRETURN_CONTINUE_BUTTON, CARD_BUTTON;
+    RUNNING, OPTIONS_CONTINUE_BUTTON, CHAT_STRING, PRETURN_CONTINUE_BUTTON, SELECTION_BUTTONS, CARD_BUTTON, HIT_BUTTON, PASS_BUTTON, RESTART_BUTTON;
 
     @Override
     public String toString() {
         switch(this) {
-            case CHAT_STRING:
-                return "Chat input";
+            case RUNNING:
+                return "Default state";
             case OPTIONS_CONTINUE_BUTTON:
                 return "Options continue button";
-            case PRETURN_CONTINUE_BUTTON:
+            case  CHAT_STRING:
+                return "Chat input";
+            case  PRETURN_CONTINUE_BUTTON:
                 return "Continue button";
-            case CARD_BUTTON:
-                return "Card button";
+            case  SELECTION_BUTTONS:
+                return "Selection buttons group";
+            case  CARD_BUTTON:
+                return "Card";
+            case  HIT_BUTTON:
+                return "Hit button";
+            case  PASS_BUTTON:
+                return "Pass button";
+            case  RESTART_BUTTON:
+                return "Game restart button";
             default:
-                return "";
+                return "Other flag";
         }
     }
     

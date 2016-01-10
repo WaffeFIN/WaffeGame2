@@ -26,4 +26,9 @@ public class DummySelector implements CardSelector {
         return cards; //echo
     }
 
+    @Override
+    public void waitToContinue() {
+        return; //:D
+    }
+
 }
