@@ -192,7 +192,7 @@
 		Korjasin pari pelilogiikan bugia. 
 	23:30
 	
-10.10
+10.1
 
 	0:30
 		Tein kuvia korteille
