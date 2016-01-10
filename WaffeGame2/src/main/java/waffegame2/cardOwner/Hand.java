@@ -67,10 +67,16 @@ public class Hand extends CardOwner {
         return false;
     }
 
+    /**
+     * @return the accessibility level of the hand-object.
+     */
     public HandAccessibility getAccessibility() {
         return acc;
     }
 
+    /**
+     * Sets the accessibility level of the hand-object.
+     */
     public void setAccessibility(HandAccessibility acc) {
         this.acc = acc;
     }

@@ -46,7 +46,11 @@
                 <version>1.1.4</version>
                 <configuration>
                     <targetClasses>
-                        <param>waffegame2*</param>
+                        <param>waffegame2.card*</param>
+                        <param>waffegame2.cardOwner*</param>
+                        <param>waffegame2.logic*</param>
+                        <param>waffegame2.player*</param>
+                        <param>waffegame2.util*</param>
                     </targetClasses>
                     <targetTests>
                         <param>waffegame2*</param>

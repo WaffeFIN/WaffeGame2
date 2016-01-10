@@ -43,8 +43,18 @@ public class Player {
         hands.add(hand);
     }
 
+    /**
+     * Gets the (index + 1)th hand
+     *
+     * @param index
+     * @return the Hand in the specified index
+     */
     public Hand getHand(int index) {
-        return hands.get(index);
+        if (index < hands.size()) {
+            return hands.get(index);
+        } else {
+            return null;
+        }
     }
 
     public void setHand(int index, Hand hand) {
@@ -55,6 +65,9 @@ public class Player {
         return hands;
     }
 
+    /**
+     * @return the sum of all the cards in all player hands
+     */
     public int cardAmount() {
         int cardAmount = 0;
         for (Hand hand : hands) {
@@ -63,10 +76,18 @@ public class Player {
         return cardAmount;
     }
 
+    /**
+     * Asks the players CardSelector to select a list of cards.
+     * @param playable A list of hands from which you can choose the said cards.
+     * @return a list of cards
+     */
     public List<Card> selectCards(List<Hand> playable) {
         return selector.selectCards(this, playable);
     }
 
+    /**
+     * Makes the game wait until the CardSelector continues
+     */
     public void waitToContinue() {
         selector.waitToContinue();
     }

@@ -26,6 +26,10 @@ public class Game implements Runnable {
         this.ui = ui;
     }
 
+    /**
+     * Set which game is to be played
+     * @param logic The GameLogic to be used
+     */
     public void setGamelogic(GameLogic logic) {
         this.logic = logic;
         this.rules = logic.getRules();
@@ -42,9 +46,9 @@ public class Game implements Runnable {
         logic.init();
 
         while (true) {
+            ui.setup();
             logic.setup();
             logic.playGame();
-            break;
         }
     }
 }

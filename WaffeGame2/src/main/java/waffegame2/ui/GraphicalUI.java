@@ -35,10 +35,25 @@ public class GraphicalUI extends UI {
         gameWindow.setVisible(true);
     }
 
+    /**
+     * Continues the thread if the flag matches the thread state. The object is
+     * added to a buffer for (potential) use.
+     *
+     * @param flag the EventFlag of the button.
+     * @param o an object to be stored in the buffer, if needed
+     */
     public synchronized void recieveAction(EventFlag flag, Object o) {
         recieveAction(flag, null, o);
     }
 
+    /**
+     * Continues the thread if the flag matches the thread state. The object and
+     * bufferFlag are added to the buffer for (potential) use.
+     *
+     * @param flag the group EventFlag of the button.
+     * @param bufferFlag the specific EventFlag of the button.
+     * @param o an object to be stored in the buffer, if needed.
+     */
     public synchronized void recieveAction(EventFlag flag, EventFlag bufferFlag, Object o) {
         if (flag == state) {
             try {
@@ -58,16 +73,28 @@ public class GraphicalUI extends UI {
         }
     }
 
+    /**
+     * Continues the main thread
+     */
     public synchronized void continueThread() {
         state = EventFlag.RUNNING;
         notifyAll();
     }
 
+    /**
+     * Pauses the main thread and sets the thread state. When set the thread
+     * waits for an action with this flag.
+     *
+     * @param flag the state to set the thread to.
+     */
     public void pauseThread(EventFlag flag) {
         state = flag;
         pauseMethod();
     }
 
+    /**
+     * The method used for pausing the thread
+     */
     private void pauseMethod() {
         while (true) {
             try {
@@ -83,6 +110,11 @@ public class GraphicalUI extends UI {
             } catch (InterruptedException e) {
             }
         }
+    }
+
+    @Override
+    public void setup() {
+        gameWindow.setup();
     }
 
     @Override
@@ -108,6 +140,10 @@ public class GraphicalUI extends UI {
         gameWindow.println(text);
     }
 
+    /**
+     * Does println in GUI and in console
+     * @param text the text to be printed
+     */
     private void printlnBoth(String text) {
         gameWindow.printlnBoth(text);
     }
@@ -126,14 +162,14 @@ public class GraphicalUI extends UI {
     public void showWinner(Player player) {
         gameWindow.showWinner(player);
         pauseThread(EventFlag.RESTART_BUTTON);
-        gameWindow.hideWinnerWindow();
+        gameWindow.hideWinnersWindow();
     }
 
     @Override
     public void showWinners(List<Player> players) {
         gameWindow.showWinners(players);
         pauseThread(EventFlag.RESTART_BUTTON);
-        gameWindow.hideWinnerWindow();
+        gameWindow.hideWinnersWindow();
     }
 
     @Override
@@ -144,7 +180,7 @@ public class GraphicalUI extends UI {
     @Override
     public void beforeTurn(Player player, String str) {
         gameWindow.println(str);
-        gameWindow.preTurn(player);
+        gameWindow.preTurn();
     }
 
     @Override
@@ -154,7 +190,13 @@ public class GraphicalUI extends UI {
 
     @Override
     public void afterTurn() {
-        gameWindow.hideSelectorButtons();
+        gameWindow.disableSelectorButtons();
+        gameWindow.hideCardSprites();
+    }
+
+    @Override
+    public void turnPassed() {
+        gameWindow.resetPileWindow();
     }
 
     @Override
@@ -190,7 +232,6 @@ public class GraphicalUI extends UI {
 //        gameWindow.showOptionWindow();
 //        pauseThread(EventFlag.OPTIONS_CONTINUE_BUTTON);
 //        gameWindow.hideOptionWindow();
-        return true;
+        return false;
     }
-
 }

@@ -28,18 +28,40 @@ public abstract class GameLogic {
         this.players = new ArrayList();
     }
 
+    /**
+     * Adds players to the game
+     *
+     * @param players The players to be added
+     */
     public void addPlayers(Collection<Player> players) {
         this.players.addAll(players);
     }
 
+    /**
+     * @return the name of the game
+     */
     abstract public String getGameName();
 
+    /**
+     * @return the GameRule object containing all the rules to the GameLogic
+     */
     abstract public GameRules getRules();
 
+    /**
+     * Initializes the GameLogic prior to setting up
+     */
     abstract public void init();
 
+    /**
+     * Resets all values to the default ones. Also resets the Hand objects, Pile
+     * object and Pack object.
+     */
     abstract public void setup();
 
+    /**
+     * Starts the main game loop. The loop ends when the game ends (when
+     * winners/losers are declared).
+     */
     abstract public void playGame();
 
 }

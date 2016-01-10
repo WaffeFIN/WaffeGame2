@@ -14,7 +14,6 @@ import waffegame2.cardOwner.Pile;
 import waffegame2.cardOwner.CardCollection;
 import waffegame2.cardOwner.Hand;
 import waffegame2.player.Player;
-import waffegame2.util.Util;
 import static waffegame2.util.Util.canSeeCards;
 import static waffegame2.util.Util.canUseCards;
 
@@ -27,6 +26,7 @@ import static waffegame2.util.Util.canUseCards;
  */
 public class TextBasedUI extends UI {
 
+    private Pile pile;
     private Scanner sc;
 
     public TextBasedUI() {
@@ -38,13 +38,18 @@ public class TextBasedUI extends UI {
     }
 
     @Override
+    public void setup() {
+        //None
+    }
+
+    @Override
     public void setPack(Pack pack) {
         //Nothing
     }
 
     @Override
     public void setPile(Pile pile) {
-        //Nothing
+        this.pile = pile;
     }
 
     @Override
@@ -92,6 +97,13 @@ public class TextBasedUI extends UI {
         return (getSelection(input.split(" "), player, playable));
     }
 
+    /**
+     * Returns a list of cards from the selections made.
+     * @param selections the selections in a form of an array of strings. The strings themselves should be sole integers
+     * @param player the player who is selecting the cards
+     * @param playable list of all hands that can be used to make the selection
+     * @return the selection, a list of cards
+     */
     private List<Card> getSelection(String[] selections, Player player, List<Hand> playable) {
         List<Card> selection = new ArrayList();
         for (String str : selections) {
@@ -144,7 +156,9 @@ public class TextBasedUI extends UI {
 
     @Override
     public void beforeTurn(Player player, String str) {
-        println(str + "\nPress <Enter> to continue");
+        println(str
+                + "\n" + pile
+                + "\nPress <Enter> to continue");
     }
 
     @Override
@@ -154,6 +168,11 @@ public class TextBasedUI extends UI {
     @Override
     public void afterTurn() {
         return; //:D
+    }
+
+    @Override
+    public void turnPassed() {
+        println("--- Turn passed ---");
     }
 
     @Override
@@ -169,5 +188,4 @@ public class TextBasedUI extends UI {
     public boolean showOptionsBox() {
         return false;
     }
-
 }

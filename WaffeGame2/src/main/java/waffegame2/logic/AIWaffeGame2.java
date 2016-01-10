@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package waffegame2.logic;
 
 import java.util.List;
@@ -11,7 +7,8 @@ import waffegame2.cardOwner.Hand;
 import waffegame2.player.Player;
 
 /**
- * The class that does all AI logic for WaffeGame2. Implements CardSelector
+ * The class that does all AI logic for WaffeGame2. Implements CardSelector.
+ * The class is yet to be implemented
  *
  * @author Walter Grönholm
  * @version 1.0

@@ -32,22 +32,30 @@ public class GameLogicWaffeGame2 extends GameLogic {
         this.rules = new GameRulesWaffeGame2();
     }
 
-    //for tests
+    /**
+     * @return the Pack created and used by the logic (only used in tests)
+     */
     public Pack getPack() {
         return pack;
     }
 
-    //for tests
+    /**
+     * Manually set the pack to be used inGame to something else (only used in
+     * tests)
+     *
+     * @param pack
+     */
     public void setPack(Pack pack) {
         this.pack = pack;
     }
 
-    //for tests
+    /**
+     * @return the Pack created and used by the logic
+     */
     public Pile getPile() {
         return pile;
     }
 
-    //for tests
     public List<Player> getPlayers() {
         return players;
     }
@@ -88,15 +96,40 @@ public class GameLogicWaffeGame2 extends GameLogic {
         deal();
     }
 
+    /**
+     * Creates a new pack. Note that the pack doesn't create cards yet.
+     */
     private void createPack() {
         pack = new Pack(1, 3);
     }
 
+    /**
+     * Creates a new Pile using the PileRule of WaffeGame2
+     */
     private void createPile() {
         pile = new Pile(new PileRuleWaffeGame2());
     }
 
-    private void createHands() {//<-------------------------------- make cleaner
+    /**
+     * Creates the hands for each player, in the following order: index 0 is the
+     * player's private hand, index 1 is the player's public/shared hand and
+     * index 2 onwards are the other players' hands.
+     */
+    private void createHands() {
+        List<Hand> handList = createNonPrivateHands();
+        for (Player player : players) {
+            player.addHand(new Hand(player, player.getName() + "'s Private Hand", rules.getMaxCardAmount()));
+            addHands(player, handList, true);
+            addHands(player, handList, false);
+        }
+    }
+
+    /**
+     * Creates and returns the non-private hands of each player.
+     *
+     * @return list of public/shared hands
+     */
+    private List<Hand> createNonPrivateHands() {
         List<Hand> handList = new ArrayList();
         for (Player player : players) {
             HandAccessibility type = HandAccessibility.VISIBLE;
@@ -105,13 +138,17 @@ public class GameLogicWaffeGame2 extends GameLogic {
             }
             handList.add(new Hand(player, player.getName() + "'s Shared Hand", rules.getMaxCardAmount(), type));
         }
-        for (Player player : players) {
-            player.addHand(new Hand(player, player.getName() + "'s Private Hand", rules.getMaxCardAmount()));
-            addHands(player, handList, true);
-            addHands(player, handList, false);
-        }
+        return handList;
     }
 
+    /**
+     * Adds the specified hand to the player.
+     *
+     * @param player player to which the hand is added to
+     * @param handList list of all public/shared hands
+     * @param ownHand whether to add the player's own hand or the other players'
+     * hands.
+     */
     private void addHands(Player player, List<Hand> handList, boolean ownHand) {
         for (Hand hand : handList) {
             if (hand.getName().equals(player.getName() + "'s Shared Hand") == ownHand) {
@@ -120,6 +157,9 @@ public class GameLogicWaffeGame2 extends GameLogic {
         }
     }
 
+    /**
+     * Deals cards to all players
+     */
     private void deal() {
         int cardAmount = rules.getStartCardAmount();
         while (players.size() * cardAmount > pack.cardAmount()) {
@@ -143,19 +183,39 @@ public class GameLogicWaffeGame2 extends GameLogic {
         }
     }
 
+    /**
+     * Checks all players for winners/a winner.
+     *
+     * @return true if the game ended
+     */
     private boolean checkEndState() {
         List<Player> winners = getWinners();
         if (!winners.isEmpty()) {
-            if (winners.size() == 1) {
-                ui.showWinner(winners.get(0));
-            } else {
-                ui.showWinners(winners);
-            }
+            displayWinners(winners);
             return true;
         }
         return false;
     }
 
+    /**
+     * Tells the UI to display the winner/winners
+     *
+     * @param winners The players to be displayed
+     */
+    private void displayWinners(List<Player> winners) {
+        if (winners.size() == 1) {
+            ui.showWinner(winners.get(0));
+        } else {
+            ui.showWinners(winners);
+        }
+    }
+
+    /**
+     * Finds all players that have "won" the game. In WaffeGame2's case, all
+     * players who have no cards left in their hands.
+     *
+     * @return a list of players with no cards left in their hands.
+     */
     private List<Player> getWinners() {
         List<Player> winners = new ArrayList();
         for (Player player : players) {
@@ -173,59 +233,89 @@ public class GameLogicWaffeGame2 extends GameLogic {
         return winners;
     }
 
+    /**
+     * Gives the turn to the player.
+     *
+     * @param player the player to give the turn to
+     */
     private void playTurn(Player player) {
         ui.beforeTurn(player, player.getName() + ", it's your turn!"
                 + "\nPack size: " + pack.cardAmount()
-                + "\nPile: " + pile.getType()
-                + "\n" + pile);
+                + "\nPile: " + pile.getType());
         player.waitToContinue();
         while (true) {
-            ui.inTurn();
-            for (Hand hand : player.getHands()) {
-                hand.sort();
-            }
-            pile.sort();
-
-            CardCollection play = getPlay(player);
-            Collection<Card> cardsPlayed = play.getCards();
-            if (cardsPlayed.isEmpty()) {
-                if (!rules.mustHitIfAbleTo() || isAbleToHit(player, pile)) {
-                    turnPassed(player);
-                    break;
-                } else {
-                    ui.println("--- You must hit a visible card if you are able to! ---");
-                }
-            }
-            if (play.transferCards(pile)) {
+            if (playedLegalTurn(player)) {
                 break;
             }
-            ui.println("--- Invalid selection! You cannot hit the cards you selected! ---");
         }
         ui.afterTurn();
     }
 
-    private CardCollection getPlay(Player player) {
+    /**
+     * Gets the play of the player and checks whether it is legal.
+     *
+     * @param player the player whose turn it is
+     * @return true if the player made a proper play for their turn.
+     */
+    private boolean playedLegalTurn(Player player) {
+        ui.inTurn();
+        for (Hand hand : player.getHands()) {
+            hand.sort();
+        }
+        pile.sort();
 
+        CardCollection play = getPlay(player);
+        Collection<Card> cardsPlayed = play.getCards();
+        if (cardsPlayed.isEmpty()) {
+            if (!rules.mustHitIfAbleTo() || isAbleToHit(player)) {
+                turnPassed(player);
+                return true;
+            } else {
+                ui.println("--- You must hit a visible card if you are able to! ---");
+                return false;
+            }
+        }
+        if (play.transferCards(pile)) {
+            return true;
+        }
+        ui.println("--- Invalid selection! You cannot hit the cards you selected! ---");
+        return false;
+    }
+
+    /**
+     * Gets a CardCollection of all the cards to be played this turn.
+     *
+     * @param player the player whose turn it is
+     * @return a CardCollection of all cards selected by the player
+     */
+    private CardCollection getPlay(Player player) {
         CardCollection selected = new CardCollection();
-        List<Hand> handList = new ArrayList(player.getHands());
+        List<Hand> playable = new ArrayList(player.getHands());
 
         while (true) {
-            ui.showSelectedCards(player, handList, selected);
+            ui.showSelectedCards(player, playable, selected);
             ui.showInstructionsToPlayer(player);
-            List<Card> selection = player.selectCards(handList);
+            List<Card> selection = player.selectCards(playable);
             if (selection == null) { //pass
                 return new CardCollection();
             }
             if (selection.isEmpty()) { //hit
                 break;
             }
-            toggleSelectedCards(selection, handList, selected);
+            toggleSelectedCards(selection, playable, selected);
         }
         return selected;
     }
 
-    private void toggleSelectedCards(List<Card> selection, List<Hand> handList, CardCollection selected) {
-        for (Hand hand : handList) {
+    /**
+     * Toggles which cards are selected.
+     *
+     * @param selection the selection made by the player
+     * @param playable the list of all playable hands
+     * @param selected the CardCollection of all selected cards
+     */
+    private void toggleSelectedCards(List<Card> selection, List<Hand> playable, CardCollection selected) {
+        for (Hand hand : playable) {
             for (Card card : hand.getCards()) {
                 if (selection.contains(card)) {
                     if (selected.getCards().contains(card)) {
@@ -238,6 +328,12 @@ public class GameLogicWaffeGame2 extends GameLogic {
         }
     }
 
+    /**
+     * Deals cards to the player who passed their turn
+     *
+     * @param playerInTurn the player who passed their turn
+     * @param pack the pack to deal cards from
+     */
     private void dealCardsAfterRound(Player playerInTurn, Pack pack) {
         Hand privateHand = playerInTurn.getHand();
         Hand sharedHand = playerInTurn.getHand(1);
@@ -249,12 +345,25 @@ public class GameLogicWaffeGame2 extends GameLogic {
         }
     }
 
-    private boolean isAbleToHit(Player player, Pile pile) {
+    /**
+     * Return whether the player is able to hit on the pile. NOT YET IMPLEMENTED
+     *
+     * @param player the player whose turn it is
+     * @return true if the player can hit on the pile (with a certain selection
+     * of cards)
+     */
+    private boolean isAbleToHit(Player player) {
         return true;
     }
 
+    /**
+     * Method is called when the player passes their turn. The UI is updated,
+     * the pile is cleared and the players hands are modified as a result.
+     *
+     * @param player the player whose turn it is
+     */
     private void turnPassed(Player player) {
-        ui.println("--- Turn passed ---");
+        ui.turnPassed();
         pile.clear();
         Hand privateHand = player.getHand();
         Hand sharedHand = player.getHand(1);

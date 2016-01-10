@@ -57,7 +57,10 @@ public class Pile extends CardOwner {
         super.clear();
         type = rule.checkType(cards);
     }
-
+    
+    /**
+     * @return the PileType of the Pile.
+     */
     public PileType getType() {
         return type;
     }

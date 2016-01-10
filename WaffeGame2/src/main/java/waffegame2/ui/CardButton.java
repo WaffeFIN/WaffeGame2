@@ -5,13 +5,12 @@
  */
 package waffegame2.ui;
 
+import java.awt.Color;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import waffegame2.card.Card;
-import static waffegame2.util.Util.distanceSquared;
 import static waffegame2.util.Util.getCardSpriteFileName;
-import static waffegame2.util.Util.sqr;
 
 /**
  * A JButton that symbolizes a Card object.
@@ -20,46 +19,29 @@ import static waffegame2.util.Util.sqr;
  * @version 1.0
  * @since 2016-01-09
  */
-public class CardSprite extends JButton {
+public class CardButton extends JButton {
 
-    private double preciseX;
-    private double preciseY;
     private Card card;
     private boolean faceUp;
     private boolean cardIsSelected;
+    private boolean isOnPile;
     private Icon faceUpIcon;
-    private static final Icon faceDownIcon = new ImageIcon("cBack.png");
+    private static final Icon faceDownIcon = new ImageIcon("images/cBack.png");
 
-    public CardSprite(Card card, int x, int y) {
+    public CardButton(Card card) {
         super();
-        super.setLocation(x, y);
-        
-        this.preciseX = x;
-        this.preciseY = y;
-        
+
         this.card = card;
         this.faceUp = false;
         this.cardIsSelected = false;
+        this.isOnPile = false;
         this.faceUpIcon = new ImageIcon(getCardSpriteFileName(card));
+        updateIcon();
     }
 
-    @Override
-    public void setLocation(int x, int y) {
-        super.setLocation(x, y);
-        this.preciseX = x;
-        this.preciseY = y;
-    }
-
-    public void stepTowards(int x, int y, int speed) {
-        if (Math.abs(this.preciseX - x) < 0.01 && Math.abs(this.preciseY - y) < 0.01) {
-            return;
-        }
-        double distanceSquared = distanceSquared(this.preciseX, this.preciseY, x, y);
-        this.preciseX += speed * sqr(this.preciseX - x) / distanceSquared;
-        this.preciseY += speed * sqr(this.preciseY - y) / distanceSquared;
-        super.setLocation((int) this.preciseX, (int) this.preciseY);
-    }
-
+    /**
+     * @return true if the card is face up
+     */
     public boolean isFaceUp() {
         return faceUp;
     }
@@ -69,6 +51,9 @@ public class CardSprite extends JButton {
         updateIcon();
     }
 
+    /**
+     * @return true if the card has been selected
+     */
     public boolean cardIsSelected() {
         return cardIsSelected;
     }
@@ -78,21 +63,42 @@ public class CardSprite extends JButton {
         updateIcon();
     }
 
+    /**
+     * Updates the appearance of the button depending on state
+     */
     private void updateIcon() {
-        if (faceUp) {
+        if (isOnPile) {
+            super.setBackground(Color.orange);
             super.setIcon(faceUpIcon);
+            super.setDisabledIcon(faceUpIcon);
+            super.setSelectedIcon(faceUpIcon);
         } else {
-            super.setIcon(faceDownIcon);
-        }
-        if (cardIsSelected) {
-            
-        } else {
-            
+            if (faceUp) {
+                super.setIcon(faceUpIcon);
+            } else {
+                super.setIcon(faceDownIcon);
+            }
+            if (cardIsSelected) {
+                super.setBackground(Color.YELLOW);
+            } else {
+                super.setBackground(Color.WHITE);
+            }
         }
     }
 
     public Card getCard() {
         return card;
+    }
+
+    /**
+     * Sets the card's isOnPile value to the parametre. If true, the card is
+     * orange and disabled, but appears non-grayed.
+     *
+     * @param b whether the card is in the pile or not
+     */
+    public void setToPile(boolean b) {
+        isOnPile = b;
+        updateIcon();
     }
 
 }

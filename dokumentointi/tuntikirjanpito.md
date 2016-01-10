@@ -205,4 +205,22 @@
 	03:30
 	
 
+	14
+		Yritän saada kortit (jButton) näkymään...
+	15
+		VIHDOIN sain ne toimimaan! Laitan vielä ActionListenerin niille. Nimesin CardSprite-luokan CardButton:ksi
+	16
+		Satunnaisia GUI juttuja. Peli on kohta pelattava
+	16:30
 	
+	
+	17
+		Peliä voi nytten pelata GUIn avulla.
+	18
+		Rakennekuvaus
+	19
+		JavaDoc:it
+	20:30
+		Testit ja PIT
+	21
+		

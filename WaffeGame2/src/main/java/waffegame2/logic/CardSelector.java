@@ -19,7 +19,17 @@ import waffegame2.player.Player;
  */
 public interface CardSelector {
 
+    /**
+     * Wait for the player to continue.
+     */
     public void waitToContinue();
-
+    
+    /**
+     * Get a list of cards to be played.
+     * 
+     * @param player The player to make their selection
+     * @param playable List of Hands that can be used to make said selection
+     * @return a list of Cards
+     */
     public List<Card> selectCards(Player player, List<Hand> playable);
 }

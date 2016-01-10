@@ -55,6 +55,9 @@ public class Pack extends CardOwner {
         }
     }
 
+    /**
+     * Shuffles the pack
+     */
     public void shuffle() {
         Collections.shuffle(cards);
     }

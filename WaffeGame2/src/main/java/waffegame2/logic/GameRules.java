@@ -20,5 +20,9 @@ public interface GameRules {
 
     public int getMaxPlayers();
 
+    /**
+     * Sets all the rules using the UI.
+     * @param ui the UI to be used when selecting all rules.
+     */
     public void setAllOptions(UI ui);
 }

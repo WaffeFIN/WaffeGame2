@@ -19,6 +19,9 @@ public enum HandAccessibility {
     VISIBLE, //Publicly visible, but only usable by the owner
     PUBLIC; //Visible and usable by everyone
 
+    /**
+     * @return whether the accessibility level permits global usage
+     */
     public boolean isUsableByAnyone() {
         switch (this) {
             case PUBLIC:
@@ -28,6 +31,9 @@ public enum HandAccessibility {
         }
     }
 
+    /**
+     * @return whether the accessibility level permits personal usage
+     */
     public boolean isUsableByOwner() {
         switch (this) {
             case HIDDEN:
@@ -37,6 +43,9 @@ public enum HandAccessibility {
         }
     }
 
+    /**
+     * @return whether the accessibility level makes the hand publicly visible
+     */
     public boolean isVisibleToEveryone() {
         switch (this) {
             case VISIBLE:
@@ -47,6 +56,10 @@ public enum HandAccessibility {
         }
     }
 
+    /**
+     * @return whether the accessibility level makes the hand visible to the
+     * owner, that is, not hidden.
+     */
     public boolean isVisibleToOwner() {
         switch (this) {
             case HIDDEN:
