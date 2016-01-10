@@ -10,6 +10,7 @@ import waffegame2.card.Card;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import waffegame2.card.CardComparator;
 
 /**
@@ -42,10 +43,11 @@ public class Pile extends CardOwner {
         if (collection.isEmpty()) {
             return false;
         }
+        List<Card> backup = new ArrayList(cards);
         cards.addAll(collection);
         PileType newType = rule.checkType(cards);
         if (newType == PileType.NULL) {
-            cards.removeAll(collection);
+            cards = backup;
             return false;
         }
         type = newType;

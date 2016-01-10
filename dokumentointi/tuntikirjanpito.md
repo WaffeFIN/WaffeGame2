@@ -221,6 +221,9 @@
 	19
 		JavaDoc:it
 	20:30
-		Testit ja PIT
+		Testit ja PIT. Käyttöohjeet
 	21
-		
+		Käyttöohjeet ja sekvenssikaaviot
+	22
+		.jar tiedosto ja testaus toisella koneella. Commit ja push
+	23

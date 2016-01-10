@@ -72,6 +72,7 @@ public class GameWindow extends javax.swing.JFrame {
         continueSWButton = new javax.swing.JButton();
         mainWindow = new javax.swing.JLayeredPane();
         pileWindow = new javax.swing.JLayeredPane();
+        jLabel1 = new javax.swing.JLabel();
         jPanelSide = new javax.swing.JPanel();
         jScrollPanePlayers = new javax.swing.JScrollPane();
         jListPlayerList = new javax.swing.JList();
@@ -127,7 +128,7 @@ public class GameWindow extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanelGame.add(jPanelWinners, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, 340, 320));
+        jPanelGame.add(jPanelWinners, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, 340, 320));
 
         selectorSubWindow.setEnabled(false);
 
@@ -206,13 +207,17 @@ public class GameWindow extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanelGame.add(continueSubWindow, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 170, -1, -1));
+        jPanelGame.add(continueSubWindow, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 180, -1, -1));
 
         mainWindow.setLayout(new java.awt.GridLayout(3, 10));
-        jPanelGame.add(mainWindow, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 300));
+        jPanelGame.add(mainWindow, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 820, 300));
 
         pileWindow.setLayout(new java.awt.FlowLayout());
-        jPanelGame.add(pileWindow, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, 700, 100));
+        jPanelGame.add(pileWindow, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 300, 710, 100));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("Pile");
+        jPanelGame.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 330, 30, 20));
 
         jPanelSide.setBackground(new java.awt.Color(255, 255, 255));
         jPanelSide.setBorder(javax.swing.BorderFactory.createTitledBorder("Players"));
@@ -284,6 +289,7 @@ public class GameWindow extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanelSide, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jPanelText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanelGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -741,6 +747,7 @@ public class GameWindow extends javax.swing.JFrame {
     private javax.swing.JPanel continueSubWindow;
     private javax.swing.JButton jButtonSubmit;
     private javax.swing.JButton jButtonWinners;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JList jListPlayerList;
     private javax.swing.JPanel jPanelGame;
     private javax.swing.JPanel jPanelSide;
